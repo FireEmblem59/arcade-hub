@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modular Web Arcade</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1>Pixel Palace Arcade</h1>
+        <div class="user-info">
+          <span>Tokens: <span id="coin-balance">0</span></span>
+
+          <div class="theme-switcher">
+            <button id="theme-retro-btn">Retro Theme</button>
+            <button id="theme-modern-btn">Modern Theme</button>
+          </div>
+
+          <!-- Future: Avatar, Username -->
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <h2>Choose Your Adventure!</h2>
+        <div id="game-list" class="game-grid"></div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          © <span id="current-year"></span> Pixel Palace Arcade. All rights
+          reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

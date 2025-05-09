@@ -1,0 +1,356 @@
+/* === 1. BASE STYLES (Theme Agnostic) === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+main {
+  flex-grow: 1;
+  padding: 30px 0;
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.game-card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+}
+
+.game-card img {
+  display: block;
+  object-position: 80% 30%;
+  background-color: #010101;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  margin: 0 auto;
+}
+
+.card-content {
+  padding: 15px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-content p {
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  flex-grow: 1;
+}
+
+.play-button {
+  display: inline-block;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  margin-top: auto; /* Stick to the bottom */
+  border: none; /* Remove default border */
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding: 15px 0;
+  margin-top: auto; /* Pushes footer to bottom */
+}
+
+footer p {
+  font-size: 0.9em;
+}
+
+/* Basic Theme Switcher Styles (add to your HTML) */
+.theme-switcher {
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.theme-switcher button {
+  padding: 8px 15px;
+  margin: 0 5px;
+  border: 1px solid; /* Border color will be set by theme */
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif; /* Consistent font for buttons */
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* === 2. RETRO THEME STYLES === */
+body.theme-retro {
+  font-family: "Roboto", sans-serif; /* Base font */
+  background-color: #1a1a2e; /* Dark blue/purple */
+  color: #e0e0e0; /* Light grey for text */
+}
+
+body.theme-retro header {
+  background-color: #162447; /* Darker blue */
+  color: #e0e0e0;
+  padding: 20px 0;
+  border-bottom: 3px solid #e94560; /* Accent color */
+}
+
+body.theme-retro header h1 {
+  font-family: "Press Start 2P", cursive;
+  font-size: 1.8em;
+  color: #f0f0f0; /* Bright white for title */
+  text-shadow: 2px 2px #e94560; /* Accent shadow */
+}
+
+body.theme-retro .user-info {
+  font-size: 1.1em;
+  background-color: #1f4068; /* Slightly lighter blue */
+  padding: 8px 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-retro #coin-balance {
+  font-weight: bold;
+  color: #ffc107; /* Gold color for coins */
+}
+
+body.theme-retro main h2 {
+  font-family: "Press Start 2P", cursive;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.5em;
+  color: #e94560; /* Accent color */
+}
+
+body.theme-retro .game-card {
+  background-color: #1f4068; /* Card background */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2a3b5e; /* Subtle border */
+}
+
+body.theme-retro .game-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  border-color: #e94560;
+}
+
+body.theme-retro .game-card img {
+  border-bottom: 2px solid #e94560; /* Accent border */
+}
+
+body.theme-retro .card-content h3 {
+  font-family: "Roboto", sans-serif; /* Keep card titles readable */
+  font-weight: 700;
+  font-size: 1.3em;
+  margin-bottom: 8px;
+  color: #f0f0f0; /* Brighter title text */
+}
+
+body.theme-retro .card-content p {
+  color: #b0b0b0; /* Lighter grey for description */
+}
+
+body.theme-retro .play-button {
+  background-color: #e94560; /* Accent color */
+  color: #ffffff;
+}
+
+body.theme-retro .play-button:hover {
+  background-color: #c7304a; /* Darker accent on hover */
+}
+
+body.theme-retro footer {
+  background-color: #162447; /* Same as header */
+  color: #a0a0a0;
+  border-top: 2px solid #1f4068;
+}
+
+body.theme-retro .theme-switcher button {
+  background-color: #1f4068;
+  color: #e0e0e0;
+  border-color: #e94560;
+}
+body.theme-retro .theme-switcher button:hover {
+  background-color: #e94560;
+  color: #162447;
+}
+
+/* === 3. MODERN THEME STYLES === */
+body.theme-modern {
+  font-family: "Roboto", sans-serif;
+  background-color: #f4f6f8; /* Light grey background */
+  color: #333; /* Dark text */
+}
+
+body.theme-modern header {
+  background-color: #ffffff;
+  color: #333;
+  padding: 20px 0;
+  border-bottom: 1px solid #dee2e6; /* Subtle border */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+body.theme-modern header h1 {
+  font-family: "Roboto", sans-serif; /* Modern font */
+  font-weight: 700;
+  font-size: 2em;
+  color: #007bff; /* Primary blue accent */
+  text-shadow: none;
+}
+
+body.theme-modern .user-info {
+  font-size: 1em;
+  background-color: #e9ecef;
+  padding: 8px 15px;
+  border-radius: 5px;
+  color: #495057;
+  box-shadow: none;
+}
+
+body.theme-modern #coin-balance {
+  font-weight: bold;
+  color: #007bff; /* Primary blue accent for coins */
+}
+
+body.theme-modern main h2 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.8em;
+  color: #343a40; /* Dark heading color */
+}
+
+body.theme-modern .game-card {
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0; /* Lighter border for cards */
+}
+
+body.theme-modern .game-card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border-color: #007bff;
+}
+
+body.theme-modern .game-card img {
+  border-bottom: 1px solid #f0f0f0; /* Very subtle separator */
+}
+
+body.theme-modern .card-content h3 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #212529; /* Darker text for card titles */
+}
+
+body.theme-modern .card-content p {
+  color: #6c757d; /* Grey text for description */
+}
+
+body.theme-modern .play-button {
+  background-color: #007bff; /* Primary blue */
+  color: #ffffff;
+}
+
+body.theme-modern .play-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+body.theme-modern footer {
+  background-color: #343a40; /* Dark footer */
+  color: #f8f9fa; /* Light text on dark footer */
+  border-top: none;
+}
+
+body.theme-modern .theme-switcher button {
+  background-color: #e9ecef;
+  color: #007bff;
+  border-color: #007bff;
+}
+body.theme-modern .theme-switcher button:hover {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+/* === RESPONSIVENESS (Theme Agnostic Layout Changes) === */
+@media (max-width: 768px) {
+  /* Adjustments for header H1 size based on theme font */
+  body.theme-retro header h1 {
+    font-size: 1.5em;
+  }
+  body.theme-modern header h1 {
+    font-size: 1.7em;
+  }
+
+  /* Adjustments for main H2 size based on theme font */
+  body.theme-retro main h2 {
+    font-size: 1.3em;
+  }
+  body.theme-modern main h2 {
+    font-size: 1.6em;
+  }
+
+  .game-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  header .container {
+    flex-direction: column;
+    gap: 10px;
+  }
+  body.theme-retro header h1 {
+    font-size: 1.3em;
+  }
+  body.theme-modern header h1 {
+    font-size: 1.5em;
+  }
+
+  body.theme-retro main h2 {
+    font-size: 1.2em;
+  }
+  body.theme-modern main h2 {
+    font-size: 1.4em;
+  }
+
+  .game-card {
+    margin-bottom: 20px; /* Add some space when they stack */
+  }
+  .game-grid {
+    grid-template-columns: 1fr; /* Stack cards on very small screens */
+  }
+}

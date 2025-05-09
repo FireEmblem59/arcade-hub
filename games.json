@@ -1,0 +1,26 @@
+[
+  {
+    "id": "memory-game",
+    "name": "Memory Match",
+    "folderName": "Memory Game",
+    "description": "Test your recall by matching pairs of cards!",
+    "thumbnail": "games/Memory Game/thumbnail.png",
+    "entryPoint": "index.html"
+  },
+  {
+    "id": "reaction-timer",
+    "name": "Reaction Test",
+    "folderName": "Reaction Timer",
+    "description": "How fast can you react? Click when the color changes.",
+    "thumbnail": "games/Reaction Timer/thumbnail.png",
+    "entryPoint": "index.html"
+  },
+  {
+    "id": "placeholder-game",
+    "name": "Coming Soon!",
+    "folderName": "Placeholder Game",
+    "description": "A new exciting game is on its way. Stay tuned!",
+    "thumbnail": "img/coming-soon-thumb.png",
+    "entryPoint": "index.html"
+  }
+]

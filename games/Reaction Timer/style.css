@@ -1,0 +1,150 @@
+body {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Vertically center content */
+  min-height: 100vh;
+  background-color: #222831; /* Dark background */
+  color: #eeeeee;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent scrollbars if box gets large */
+}
+
+.game-container {
+  background-color: #393e46; /* Slightly lighter container */
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.game-header h1 {
+  font-family: "Press Start 2P", cursive;
+  color: #00adb5; /* Accent color */
+  margin-bottom: 30px;
+  font-size: 2em;
+}
+
+.reaction-box {
+  width: 100%;
+  height: 250px; /* Fixed height for the reaction area */
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.1s ease-in-out;
+  margin-bottom: 25px;
+  border: 3px solid #222831;
+  user-select: none; /* Prevent text selection */
+}
+
+.reaction-box p {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+#result-text {
+  font-size: 1.8em;
+  margin-top: 10px;
+}
+
+/* States for the reaction box */
+.state-waiting {
+  background-color: #d65a31; /* Orange/Red for waiting */
+  color: #eeeeee;
+}
+.state-waiting:hover {
+  background-color: #c04e27;
+}
+
+.state-ready {
+  background-color: #3a9188; /* Teal/Green for ready to click */
+  color: #ffffff;
+}
+.state-ready:hover {
+  background-color: #317e76;
+}
+
+.state-clicked-too-soon {
+  background-color: #d65a31; /* Same as waiting, or a different error color */
+  color: #eeeeee;
+}
+
+.state-result {
+  background-color: #393e46; /* Back to container color or a neutral for result display */
+  color: #eeeeee;
+  cursor: default; /* No pointer needed once result is shown */
+}
+.state-result #instruction-text {
+  display: none; /* Hide initial instruction */
+}
+
+.game-info {
+  margin-bottom: 25px;
+  font-size: 1.1em;
+  background-color: #222831;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.game-controls button,
+.game-controls a {
+  font-family: "Press Start 2P", cursive;
+  background-color: #00adb5;
+  color: #222831; /* Dark text on light button */
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8em; /* Slightly smaller for these controls */
+  transition: background-color 0.2s ease, color 0.2s;
+  text-decoration: none;
+  margin: 5px;
+  display: inline-block; /* Ensure they behave well next to each other */
+}
+
+.game-controls button:hover,
+.game-controls a:hover {
+  background-color: #007a7f;
+  color: #eeeeee;
+}
+
+.reward-button {
+  /* Specific style for reward button if needed */
+  background-color: #3a9188; /* Greenish */
+  color: #eeeeee;
+}
+.reward-button:hover {
+  background-color: #317e76;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 500px) {
+  .game-header h1 {
+    font-size: 1.6em;
+  }
+  .reaction-box {
+    height: 200px;
+  }
+  .reaction-box p {
+    font-size: 1.2em;
+  }
+  #result-text {
+    font-size: 1.5em;
+  }
+  .game-controls button,
+  .game-controls a {
+    font-size: 0.7em;
+    padding: 10px 15px;
+  }
+}

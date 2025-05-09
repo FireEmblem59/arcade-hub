@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reaction Timer Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="game-container">
+      <header class="game-header">
+        <h1>Quick Reflex!</h1>
+      </header>
+
+      <div id="reaction-box" class="reaction-box state-waiting">
+        <p id="instruction-text">Click when the box turns green!</p>
+        <p id="result-text" class="hidden"></p>
+      </div>
+
+      <div class="game-info">
+        <p>Best Time: <span id="best-time">N/A</span> ms</p>
+      </div>
+
+      <div id="controls" class="game-controls">
+        <button id="start-button">Start Game / Try Again</button>
+        <a href="../../index.html" class="hub-button">Back to Arcade Hub</a>
+        <a id="collect-reward-button" href="#" class="reward-button hidden"
+          >Collect Tokens & Return</a
+        >
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
