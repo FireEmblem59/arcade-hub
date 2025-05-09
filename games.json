@@ -16,6 +16,14 @@
     "entryPoint": "index.html"
   },
   {
+    "id": "stop-the-bar",
+    "name": "Stop the Bar",
+    "folderName": "Stop the Bar",
+    "description": "Stop the moving bar in the target zone. Precision pays!",
+    "thumbnail": "games/Stop the Bar/thumbnail.png",
+    "entryPoint": "index.html"
+  },
+  {
     "id": "placeholder-game",
     "name": "Coming Soon!",
     "folderName": "Placeholder Game",

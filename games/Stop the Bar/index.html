@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stop the Bar!</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="game-container">
+      <header class="game-header">
+        <h1>Stop the Bar!</h1>
+        <p class="instructions">
+          Press SPACE or CLICK to stop the bar in the GREEN zone!
+        </p>
+      </header>
+
+      <div class="track-container">
+        <div id="track" class="track">
+          <div id="target-zone" class="target-zone"></div>
+          <div id="moving-bar" class="moving-bar"></div>
+        </div>
+      </div>
+
+      <div class="game-info">
+        <p>Score: <span id="score-display">0</span></p>
+        <p>Attempts Left: <span id="attempts-left">3</span></p>
+      </div>
+
+      <div id="result-message" class="result-message hidden">
+        <p id="round-result-text"></p>
+      </div>
+
+      <div class="game-controls">
+        <button id="start-button">Start Game</button>
+        <a href="../../index.html" class="hub-button">Back to Arcade Hub</a>
+      </div>
+
+      <div id="game-over-message" class="game-over-message hidden">
+        <h2>Game Over!</h2>
+        <p>Your final score: <span id="final-score-display">0</span></p>
+        <p>You earned <span id="tokens-earned-display">0</span> tokens!</p>
+        <a href="../../index.html" id="return-to-hub-final" class="hub-button"
+          >Return to Hub</a
+        >
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

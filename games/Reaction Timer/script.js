@@ -1,4 +1,14 @@
+const ARCADE_TOKENS_KEY = "arcadeTokens";
+const BEST_TIME_KEY = "reactionGameBestTime";
+
+function saveTokensToLocalStorage(amount) {
+  if (amount <= 0) return; // Don't save zero/negative rewards
+  let currentTokens = parseInt(localStorage.getItem(ARCADE_TOKENS_KEY)) || 0;
+  localStorage.setItem(ARCADE_TOKENS_KEY, currentTokens + amount);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  // DOM Elements
   const reactionBox = document.getElementById("reaction-box");
   const instructionText = document.getElementById("instruction-text");
   const resultText = document.getElementById("result-text");
@@ -6,38 +16,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const bestTimeElement = document.getElementById("best-time");
   const collectRewardButton = document.getElementById("collect-reward-button");
 
-  const BEST_TIME_KEY = "reactionGameBestTime";
-
+  // Game State
   let timerId = null;
   let startTime = 0;
-  let gameState = "initial"; // 'initial', 'waiting', 'ready', 'result'
-  let bestTime = localStorage.getItem(BEST_TIME_KEY)
-    ? parseFloat(localStorage.getItem(BEST_TIME_KEY))
-    : Infinity;
+  let gameState = "initial"; // 'initial'|'waiting'|'ready'|'result'
+  let bestTime = parseFloat(localStorage.getItem(BEST_TIME_KEY)) || Infinity;
 
-  function updateBestTimeDisplay() {
-    if (bestTime === Infinity || isNaN(bestTime)) {
-      bestTimeElement.textContent = "N/A";
-    } else {
-      bestTimeElement.textContent = bestTime.toFixed(0);
-    }
-  }
+  // Initialize
+  updateBestTimeDisplay();
+  collectRewardButton.classList.add("hidden");
 
+  // Core Game Functions
   function startGame() {
     gameState = "waiting";
-    reactionBox.className = "reaction-box state-waiting"; // Reset classes
+    reactionBox.className = "reaction-box state-waiting";
     instructionText.textContent = "Wait for Green...";
     resultText.classList.add("hidden");
     collectRewardButton.classList.add("hidden");
-    startButton.textContent = "Game in Progress...";
     startButton.disabled = true;
 
-    // Random delay between 1 and 5 seconds (adjust as needed)
     const randomDelay = Math.random() * 4000 + 1000;
-
     timerId = setTimeout(() => {
       if (gameState === "waiting") {
-        // Ensure game hasn't been reset or clicked too soon
         gameState = "ready";
         reactionBox.className = "reaction-box state-ready";
         instructionText.textContent = "CLICK NOW!";
@@ -50,57 +50,64 @@ document.addEventListener("DOMContentLoaded", () => {
     if (gameState === "waiting") {
       // Clicked too soon
       clearTimeout(timerId);
-      gameState = "result";
-      reactionBox.className = "reaction-box state-clicked-too-soon";
-      instructionText.textContent = "Too Soon!";
-      resultText.textContent = "Try to wait for green.";
-      resultText.classList.remove("hidden");
-      resetStartButton();
-      collectRewardButton.classList.add("hidden"); // No reward if too soon
+      endGame(false);
     } else if (gameState === "ready") {
-      // Clicked on time
-      const endTime = performance.now();
-      const reactionTime = endTime - startTime;
-      gameState = "result";
+      // Valid click
+      const reactionTime = performance.now() - startTime;
+      endGame(true, reactionTime);
+    }
+  }
 
-      reactionBox.className = "reaction-box state-result";
-      instructionText.textContent = "Your Reaction Time:";
-      resultText.textContent = `${reactionTime.toFixed(0)} ms`;
-      resultText.classList.remove("hidden");
-      resetStartButton();
+  function endGame(validClick, reactionTime = 0) {
+    gameState = "result";
+    clearTimeout(timerId);
 
+    if (validClick) {
+      // Save best time if applicable
       if (reactionTime < bestTime) {
         bestTime = reactionTime;
         localStorage.setItem(BEST_TIME_KEY, bestTime);
+        updateBestTimeDisplay();
       }
-      updateBestTimeDisplay();
-      prepareReward(reactionTime);
-    }
-    // If gameState is 'initial' or 'result', clicking the box does nothing until Start is pressed.
-  }
 
-  function calculateReward(time) {
-    // Reward tiers (example)
-    if (time <= 150) return 20; // Excellent
-    if (time <= 200) return 15; // Great
-    if (time <= 250) return 10; // Good
-    if (time <= 350) return 5; // Okay
-    if (time <= 500) return 2; // Fair
-    return 0; // Slower than 500ms or too soon
-  }
+      // Calculate and save reward
+      const reward = calculateReward(reactionTime);
+      if (reward > 0) saveTokensToLocalStorage(reward);
 
-  function prepareReward(reactionTime) {
-    const reward = calculateReward(reactionTime);
-    if (reward > 0) {
-      collectRewardButton.href = `../../index.html?reward=${reward}`;
-      collectRewardButton.textContent = `Collect ${reward} Token${
+      // Update UI
+      reactionBox.className = "reaction-box state-result";
+      instructionText.textContent = "Your Reaction Time:";
+      resultText.textContent = `${reactionTime.toFixed(0)} ms`;
+      collectRewardButton.textContent = `Return to Hub (Earned ${reward} Token${
         reward === 1 ? "" : "s"
-      } & Return`;
-      collectRewardButton.classList.remove("hidden");
+      })`;
     } else {
-      collectRewardButton.classList.add("hidden");
-      // Optionally, show a message like "No tokens for this time."
+      // Too soon click
+      reactionBox.className = "reaction-box state-clicked-too-soon";
+      instructionText.textContent = "Too Soon!";
+      resultText.textContent = "Try to wait for green.";
+      collectRewardButton.textContent = "Return to Hub";
     }
+
+    resultText.classList.remove("hidden");
+    collectRewardButton.classList.remove("hidden");
+    resetStartButton();
+  }
+
+  // Helper Functions
+  function calculateReward(time) {
+    if (time <= 150) return 20;
+    if (time <= 200) return 15;
+    if (time <= 250) return 10;
+    if (time <= 350) return 5;
+    if (time <= 500) return 2;
+    return 0;
+  }
+
+  function updateBestTimeDisplay() {
+    bestTimeElement.textContent = isFinite(bestTime)
+      ? bestTime.toFixed(0)
+      : "N/A";
   }
 
   function resetStartButton() {
@@ -111,8 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Event Listeners
   startButton.addEventListener("click", startGame);
   reactionBox.addEventListener("click", handleBoxClick);
-
-  // Initial Setup
-  updateBestTimeDisplay();
-  collectRewardButton.classList.add("hidden"); // Ensure it's hidden initially
+  collectRewardButton.addEventListener("click", () => {
+    window.location.href = "../../index.html";
+  });
 });

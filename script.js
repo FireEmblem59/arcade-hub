@@ -58,26 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  function checkForReward() {
-    console.log("Checking for reward...");
-    const urlParams = new URLSearchParams(window.location.search);
-    const reward = parseInt(urlParams.get("reward"));
-
-    console.log("Url Parameters:", urlParams.toString());
-    console.log("Reward:", reward);
-    console.log("Current Coins:", getCoins());
-
-    if (!isNaN(reward) && reward > 0) {
-      let currentCoins = getCoins();
-      currentCoins += reward;
-      saveCoins(currentCoins);
-      updateCoinDisplay();
-
-      const newUrl = window.location.pathname + window.location.hash;
-      history.replaceState(null, "", newUrl);
-    }
-  }
-
   // --- GAME LOADING FUNCTION ---
   async function loadGames() {
     if (!gameListContainer) {
@@ -112,8 +92,6 @@ document.addEventListener("DOMContentLoaded", () => {
           currentTheme
         );
 
-        // The "base path" for the default image is conceptual (img/default-thumb.png).
-        // getThemedImagePath will turn it into img/default-thumb_modern.png or img/default-thumb_retro.png.
         const defaultThemedThumbnailPath = getThemedImagePath(
           "img/default-thumb.png",
           currentTheme
@@ -124,8 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
           themedThumbnailUrl = defaultThemedThumbnailPath;
         }
 
-        // Absolute fallback image if all else fails (e.g., themed images don't exist)
-        // This MUST be a valid path to an existing image.
         const onErrorFallbackImage = "img/default-thumb_modern.png";
 
         card.innerHTML = `
@@ -174,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     applyThemeToBody(currentTheme);
-    checkForReward();
     updateCoinDisplay();
     loadGames();
     setupThemeSwitcher();
