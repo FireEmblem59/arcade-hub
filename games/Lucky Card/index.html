@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lucky Card Pick</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Limelight&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="game-container">
+      <header class="game-header">
+        <h1>Lucky Card!</h1>
+        <p class="instructions" id="instruction-text">
+          Pick a card to reveal your prize!
+        </p>
+        <p class="cost-to-play hidden" id="cost-to-play-text">
+          Cost to play: <span id="play-cost">0</span> tokens
+        </p>
+
+        <div class="info-icon">
+          ?
+          <div class="outcomes-tooltip">
+            <h4>Possible Prizes</h4>
+            <div id="outcomes-list"></div>
+          </div>
+        </div>
+      </header>
+
+      <div id="card-area" class="card-area">
+        <!-- Cards will be generated here -->
+      </div>
+
+      <div id="result-display" class="result-display hidden">
+        <p id="result-text"></p>
+      </div>
+
+      <div class="game-controls">
+        <button id="play-again-button" class="hidden">
+          Play Again (<span id="play-again-cost">0</span> Tokens)
+        </button>
+        <a href="../../index.html" class="hub-button">Back to Arcade Hub</a>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

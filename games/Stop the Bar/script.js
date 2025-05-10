@@ -6,6 +6,36 @@ function saveTokensToLocalStorage(amount) {
   localStorage.setItem(ARCADE_TOKENS_KEY, currentTokens + amount);
 }
 
+function createTokenDisplay() {
+  let display = document.getElementById("in-game-token-display");
+  if (!display) {
+    display = document.createElement("div");
+    display.id = "in-game-token-display";
+    display.style.position = "fixed";
+    display.style.top = "10px";
+    display.style.right = "10px";
+    display.style.padding = "8px 12px";
+    display.style.backgroundColor = "rgba(0,0,0,0.7)";
+    display.style.color = "#FFD700"; // Gold for consistency, or theme later
+    display.style.borderRadius = "5px";
+    display.style.fontFamily = "'Press Start 2P', cursive";
+    display.style.fontSize = "0.9em";
+    display.style.zIndex = "1000";
+    document.body.appendChild(display);
+  }
+  return display;
+}
+
+function updateTokenDisplayInGame(tokens) {
+  const display = createTokenDisplay();
+  display.textContent = `Tokens: ${tokens}`;
+}
+
+function getCurrentTokens() {
+  // Helper if not already in this game's script
+  return parseInt(localStorage.getItem(ARCADE_TOKENS_KEY)) || 0;
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const track = document.getElementById("track");
   const targetZone = document.getElementById("target-zone");
@@ -39,6 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let roundActive = false;
 
   function setupGameElements() {
+    updateTokenDisplayInGame(getCurrentTokens());
     const trackWidth = track.offsetWidth;
     const targetWidth = trackWidth * (targetZoneWidthPercent / 100);
     targetZone.style.width = `${targetWidth}px`;

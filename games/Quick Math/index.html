@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quick Math Challenge</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="game-container">
+      <header class="game-header">
+        <h1>Math Whiz!</h1>
+      </header>
+
+      <div class="game-area">
+        <div id="timer-display" class="timer-display">
+          Time: <span id="time-left">10s</span>
+        </div>
+
+        <div id="problem-display" class="problem-display">
+          <!-- Problem will be generated here -->
+        </div>
+
+        <input
+          type="number"
+          id="answer-input"
+          class="answer-input"
+          placeholder="Your Answer"
+          autocomplete="off"
+        />
+
+        <button id="submit-button" class="submit-button">Submit Answer</button>
+
+        <div id="feedback-message" class="feedback-message">
+          <!-- Feedback like "Correct!" or "Incorrect!" -->
+        </div>
+      </div>
+
+      <div class="game-info">
+        <p>Score: <span id="score-display">0</span></p>
+        <p>Questions Left: <span id="questions-left-display">10</span></p>
+      </div>
+
+      <div class="game-controls">
+        <button id="start-game-button">Start Game</button>
+        <a href="../../index.html" class="hub-button">Back to Arcade Hub</a>
+      </div>
+
+      <div id="game-over-message" class="game-over-message hidden">
+        <h2>Challenge Complete!</h2>
+        <p>Your final score: <span id="final-score-display">0</span></p>
+        <p>You earned <span id="tokens-earned-display">0</span> tokens!</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

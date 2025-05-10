@@ -1,0 +1,294 @@
+body {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Vertically center for this game */
+  min-height: 100vh;
+  background-color: #1a1a1a; /* Dark casino background */
+  color: #f0f0f0;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto; /* Allow scroll if content overflows on small screens */
+}
+
+.game-container {
+  background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
+  border: 5px solid #c0a062; /* Gold border */
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.5); /* Gold glow and inner shadow */
+  text-align: center;
+  width: 100%;
+  max-width: 550px;
+}
+
+.game-header h1 {
+  font-family: "Limelight", cursive; /* Casino-style font */
+  color: #ffd700; /* Gold color */
+  text-shadow: 2px 2px #000000, 0 0 10px #ffd700;
+  margin-bottom: 10px;
+  font-size: 2.8em;
+}
+
+.instructions,
+.cost-to-play {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.1em;
+  color: #cccccc;
+  margin-bottom: 25px;
+}
+.cost-to-play {
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.card-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px; /* Spacing between cards */
+  margin-bottom: 30px;
+  flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+  perspective: 1000px;
+}
+
+.card {
+  width: 100px;
+  height: 150px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Fancy flip */
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column; /* To stack text and icon */
+  justify-content: center;
+  align-items: center;
+  font-family: "Press Start 2P", cursive; /* Retro font for card content */
+}
+
+.card-back {
+  background: linear-gradient(
+    135deg,
+    #8b0000,
+    #b22222
+  ); /* Dark red card back */
+  border: 3px outset #ff4500;
+  color: #ffd700; /* Gold symbol on back */
+  font-size: 3em; /* Large question mark or symbol */
+}
+.card-back::before {
+  /* Example content for card back */
+  content: "?";
+}
+
+.card-front {
+  background: linear-gradient(135deg, #f0e6d2, #fff8dc); /* Creamy/gold front */
+  border: 3px outset #c0a062;
+  color: #333;
+  transform: rotateY(180deg);
+  padding: 10px;
+  box-sizing: border-box;
+}
+.card-front .prize-amount {
+  font-size: 1.8em;
+  color: #a0522d; /* Brown/Sienna for prize amount */
+  margin-bottom: 5px;
+}
+.card-front .prize-text {
+  font-size: 0.7em;
+  color: #555;
+}
+.card-front.jackpot .prize-amount {
+  /* Special style for jackpot */
+  color: #ff4500;
+  text-shadow: 0 0 8px #ffd700;
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+  cursor: default;
+}
+.card.disabled {
+  /* Style for unpicked cards after a pick */
+  opacity: 0.6;
+  cursor: default;
+  transform: scale(0.95); /* Optionally shrink them slightly */
+}
+
+.result-display {
+  margin-bottom: 25px;
+  min-height: 2em;
+}
+.result-display p {
+  font-family: "Limelight", cursive;
+  font-size: 1.6em;
+  color: #ffd700;
+  text-shadow: 1px 1px #000;
+}
+
+.game-controls button,
+.game-controls a.hub-button {
+  font-family: "Press Start 2P", cursive;
+  background-color: #c0a062; /* Gold button */
+  color: #1a1a1a; /* Dark text */
+  border: 2px outset #a08042;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  text-decoration: none;
+  margin: 5px;
+  display: inline-block;
+}
+.game-controls button:hover,
+.game-controls a.hub-button:hover {
+  background-color: #ae9052;
+  transform: translateY(-1px);
+}
+.game-controls button:active {
+  transform: translateY(1px);
+}
+.game-controls button:disabled {
+  background-color: #777;
+  border-color: #555;
+  color: #aaa;
+  cursor: not-allowed;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .game-header h1 {
+    font-size: 2.2em;
+  }
+  .card {
+    width: 80px;
+    height: 120px;
+  }
+  .card-back {
+    font-size: 2.5em;
+  }
+  .card-front .prize-amount {
+    font-size: 1.5em;
+  }
+  .card-front .prize-text {
+    font-size: 0.6em;
+  }
+  .result-display p {
+    font-size: 1.3em;
+  }
+}
+@media (max-width: 380px) {
+  .card-area {
+    gap: 10px;
+  }
+  .card {
+    width: 70px;
+    height: 105px;
+  }
+}
+
+.card.picked-card {
+  box-shadow: 0 0 15px 5px #ffd700, 0 0 5px 2px #fff;
+  border-color: #fffacd !important;
+  transform: rotateY(180deg) scale(1.05);
+  z-index: 10;
+}
+
+.card-front.jackpot-revealed {
+  animation: jackpotPulse 1s infinite alternate;
+}
+
+@keyframes jackpotPulse {
+  from {
+    box-shadow: 0 0 8px #ffd700, inset 0 0 5px #ff8c00;
+  }
+  to {
+    box-shadow: 0 0 15px #ff8c00, inset 0 0 10px #ffa500;
+  }
+}
+
+.info-icon {
+  position: absolute;
+  top: 15px;
+  right: 16%;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.3);
+  color: #ffd700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.8em;
+  transition: all 0.3s ease;
+}
+
+.info-icon:hover .outcomes-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.outcomes-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 180px;
+  background: rgba(0, 0, 0, 0.9);
+  border: 2px solid #ffd700;
+  border-radius: 8px;
+  padding: 12px;
+  transition: opacity 0.2s ease;
+  z-index: 1000;
+  text-align: left;
+}
+
+.outcomes-tooltip h4 {
+  margin: 0 0 8px 0;
+  color: #ffd700;
+  font-size: 0.8em;
+}
+
+.outcome-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 0.8em;
+}
+
+.outcome-item.win {
+  color: #2ecc71;
+}
+
+.outcome-item.lose {
+  color: #e74c3c;
+}
+
+.outcome-item.win::before {
+  content: "🎰";
+  margin-right: 8px;
+}
+
+.outcome-item.lose::before {
+  content: "💀";
+  margin-right: 8px;
+}

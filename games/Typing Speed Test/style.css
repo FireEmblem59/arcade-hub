@@ -1,0 +1,193 @@
+body {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background-color: #343a40; /* Dark grey */
+  color: #f8f9fa; /* Light text */
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.game-container {
+  background-color: #495057; /* Medium grey */
+  padding: 25px 35px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  width: 100%;
+  max-width: 700px; /* Wider for typing */
+}
+
+.game-header h1 {
+  font-family: "Press Start 2P", cursive;
+  color: #66fcf1; /* Cyan accent */
+  margin-bottom: 25px;
+  font-size: 2em;
+}
+
+.test-area {
+  margin-bottom: 20px;
+}
+
+.text-to-type {
+  background-color: #212529; /* Very dark grey */
+  color: #ced4da; /* Lighter grey for text */
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 1.2em;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  min-height: 100px; /* Ensure space for text */
+  text-align: left;
+  white-space: pre-wrap; /* Preserve spaces and newlines from JS */
+  font-family: "Roboto Mono", monospace; /* Monospaced font for typing */
+}
+.text-to-type .correct {
+  color: #66fcf1;
+} /* Cyan for correctly typed part */
+.text-to-type .incorrect {
+  background-color: #721c24;
+  color: #f8d7da;
+  text-decoration: underline wavy red;
+} /* Red background for errors */
+
+.typing-input {
+  width: 100%;
+  min-height: 100px;
+  padding: 15px;
+  border: 2px solid #6c757d;
+  border-radius: 8px;
+  font-size: 1.1em;
+  background-color: #f8f9fa;
+  color: #212529;
+  box-sizing: border-box;
+  resize: none; /* Disable textarea resizing */
+  font-family: "Roboto Mono", monospace; /* Monospaced font for typing */
+}
+.typing-input:focus {
+  outline: none;
+  border-color: #66fcf1;
+  box-shadow: 0 0 8px rgba(102, 252, 241, 0.5);
+}
+.typing-input:disabled {
+  background-color: #e9ecef;
+}
+
+.game-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #212529;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 1em;
+}
+.game-stats p {
+  margin: 0 10px;
+}
+.game-stats span {
+  font-weight: bold;
+  color: #66fcf1;
+}
+
+.result-message {
+  min-height: 1.5em;
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 1.1em;
+}
+
+.game-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.game-controls button,
+.game-controls a.hub-button {
+  font-family: "Press Start 2P", cursive;
+  background-color: #66fcf1;
+  color: #212529;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  min-width: 140px;
+  text-align: center;
+}
+.game-controls button:hover,
+.game-controls a.hub-button:hover {
+  background-color: #45a29e;
+}
+.game-controls button:disabled {
+  background-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.final-summary {
+  margin-top: 25px;
+  padding: 20px;
+  background-color: #212529;
+  border-radius: 8px;
+  border: 2px solid #66fcf1;
+}
+.final-summary h2 {
+  font-family: "Press Start 2P", cursive;
+  color: #66fcf1;
+  margin-bottom: 10px;
+}
+.final-summary p {
+  margin: 8px 0;
+  font-size: 1.1em;
+}
+.final-summary span {
+  font-weight: bold;
+}
+.final-summary a.hub-button {
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* In-game token display (copy from other games or use a shared CSS if you create one) */
+#in-game-token-display {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 8px 12px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffd700; /* Or use the game's accent color like #66fcf1 */
+  border-radius: 5px;
+  font-family: "'Press Start 2P', cursive";
+  font-size: 0.9em;
+  z-index: 1000;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .game-header h1 {
+    font-size: 1.6em;
+  }
+  .text-to-type {
+    font-size: 1em;
+  }
+  .typing-input {
+    font-size: 1em;
+  }
+  .game-stats {
+    flex-direction: column;
+    gap: 5px;
+    font-size: 0.9em;
+  }
+}

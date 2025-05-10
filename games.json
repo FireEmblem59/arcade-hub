@@ -16,11 +16,35 @@
     "entryPoint": "index.html"
   },
   {
+    "id": "typing-speed-test",
+    "name": "Typing Speed Test",
+    "folderName": "Typing Speed Test",
+    "description": "How fast can you type? Test your keyboard skills!",
+    "thumbnail": "games/Typing Speed Test/thumbnail.png",
+    "entryPoint": "index.html"
+  },
+  {
     "id": "stop-the-bar",
     "name": "Stop the Bar",
     "folderName": "Stop the Bar",
     "description": "Stop the moving bar in the target zone. Precision pays!",
     "thumbnail": "games/Stop the Bar/thumbnail.png",
+    "entryPoint": "index.html"
+  },
+  {
+    "id": "quick-math",
+    "name": "Quick Math",
+    "folderName": "Quick Math",
+    "description": "Solve arithmetic problems against the clock!",
+    "thumbnail": "games/Quick Math/thumbnail.png",
+    "entryPoint": "index.html"
+  },
+  {
+    "id": "lucky-card",
+    "name": "Lucky Card",
+    "folderName": "Lucky Card",
+    "description": "Pick a card, any card! Will fortune favor you?",
+    "thumbnail": "games/Lucky Card/thumbnail.png",
     "entryPoint": "index.html"
   },
   {

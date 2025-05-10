@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typing Speed Test</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="game-container">
+      <header class="game-header">
+        <h1>Keyboard Ninja!</h1>
+      </header>
+
+      <div class="test-area">
+        <div id="text-to-type" class="text-to-type">
+          <!-- Target text will be loaded here -->
+          Press "Start Test" to begin.
+        </div>
+        <textarea
+          id="typing-input"
+          class="typing-input"
+          placeholder="Start typing here when ready..."
+          disabled
+        ></textarea>
+      </div>
+
+      <div class="game-stats">
+        <p>Time: <span id="timer-display">0</span>s</p>
+        <p>WPM: <span id="wpm-display">0</span></p>
+        <p>Accuracy: <span id="accuracy-display">0</span>%</p>
+      </div>
+
+      <div id="result-message" class="result-message hidden">
+        <!-- Results will be shown here -->
+      </div>
+
+      <div class="game-controls">
+        <button id="start-test-button">Start Test</button>
+        <a href="../../index.html" class="hub-button">Back to Arcade Hub</a>
+      </div>
+
+      <div id="final-summary" class="final-summary hidden">
+        <h2>Test Complete!</h2>
+        <p>Your WPM: <span id="final-wpm">0</span></p>
+        <p>Accuracy: <span id="final-accuracy">0</span>%</p>
+        <p>You earned <span id="tokens-earned-display">0</span> tokens!</p>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

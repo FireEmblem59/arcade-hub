@@ -354,3 +354,13 @@ body.theme-modern .theme-switcher button:hover {
     grid-template-columns: 1fr; /* Stack cards on very small screens */
   }
 }
+
+#coin-text {
+  padding: 8px 12px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #ffd700;
+  border-radius: 5px;
+  font-family: "Press Start 2P", cursive;
+  font-size: 0.9em;
+  z-index: 1000;
+}

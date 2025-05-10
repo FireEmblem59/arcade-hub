@@ -3,6 +3,11 @@ const path = require("path");
 const app = express();
 const port = 3000;
 
+const os = require("os");
+const ip = Object.values(os.networkInterfaces())
+  .flat()
+  .find((i) => i.family === "IPv4" && !i.internal)?.address;
+
 app.use((req, res, next) => {
   if (req.path.endsWith(".html")) {
     res.setHeader("Cache-Control", "no-store"); // Simplest for ensuring freshness
@@ -14,6 +19,8 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, "")));
 
 app.listen(port, () => {
-  console.log(`Arcade Hub server listening at http://localhost:${port}`);
+  console.log(`Arcade Hub server available at:
+  → Local:   http://localhost:${port}
+  → Network: http://${ip}:${port}`);
   console.log(`Serving files from: ${__dirname}`);
 });
