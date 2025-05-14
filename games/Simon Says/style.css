@@ -1,0 +1,205 @@
+/* arcade-hub/games/Simon Says/style.css */
+/* This file uses CSS variables defined by the loaded theme CSS */
+
+body {
+  font-family: var(--font-primary, "Roboto", sans-serif);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center game container for this layout */
+  min-height: 100vh;
+  background-color: var(--color-bg, #1e1e3f); /* Dark blue/purple default */
+  color: var(--color-text, #f0f0f0);
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#in-game-token-display {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 10px 15px;
+  background-color: var(--color-surface-dark-alpha, rgba(12, 19, 36, 0.85));
+  color: var(--color-tokens, #ffd700);
+  border-radius: var(--border-radius-md, 5px);
+  font-family: var(--font-accent-pixel, "Press Start 2P", cursive);
+  font-size: 0.9em;
+  z-index: 1000;
+  border: 1px solid var(--color-primary-accent, #9f00a8);
+  box-shadow: var(--box-shadow-md, 0 3px 8px rgba(0, 0, 0, 0.4));
+}
+
+.game-container {
+  background-color: var(
+    --color-surface-primary,
+    #2c2c54
+  ); /* Darker purple surface */
+  padding: 25px 30px;
+  border-radius: var(--border-radius-lg, 15px); /* More rounded for Simon */
+  box-shadow: var(--box-shadow-lg, 0 8px 25px rgba(0, 0, 0, 0.5));
+  text-align: center;
+  width: 100%;
+  max-width: 450px; /* Square-ish container */
+  border: 2px solid var(--color-border, #474787);
+}
+
+.game-header h1 {
+  font-family: var(--font-accent-pixel, "Press Start 2P", cursive);
+  color: var(
+    --color-game-title,
+    var(--color-primary-accent, #da00ff)
+  ); /* Bright magenta */
+  margin-bottom: 15px;
+  font-size: 2em;
+  text-shadow: var(--text-shadow-accent, 2px 2px 0px rgba(0, 0, 0, 0.6));
+}
+.instructions {
+  font-size: 0.95em;
+  color: var(--color-text-muted, #b0b0d0);
+  margin-bottom: 20px;
+  min-height: 1.2em; /* Prevent layout shift */
+}
+
+.simon-board {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 15px;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto 25px auto;
+  background-color: var(--color-bg, #1e1e3f);
+  padding: 15px;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5),
+    0 0 10px var(--color-primary-accent, #da00ff);
+}
+
+.simon-button {
+  width: 100%;
+  height: 100%;
+  border: 3px solid var(--color-surface-dark, #101028);
+  cursor: pointer;
+  transition: opacity 0.1s ease-in-out, box-shadow 0.15s ease-in-out;
+  opacity: 0.7;
+}
+.simon-button:hover:not(.active):not(.disabled) {
+  /* Hover effect only if active & not disabled */
+  opacity: 0.9;
+}
+
+/* Specific button colors */
+#green {
+  background-color: #00a74a;
+  border-top-left-radius: 100%;
+}
+#red {
+  background-color: #9f0f17;
+  border-top-right-radius: 100%;
+}
+#yellow {
+  background-color: #cca707;
+  border-bottom-left-radius: 100%;
+}
+#blue {
+  background-color: #094a8f;
+  border-bottom-right-radius: 100%;
+}
+
+/* Active (lit up) state */
+.simon-button.active {
+  opacity: 1 !important;
+  box-shadow: 0 0 20px currentColor, inset 0 0 10px rgba(255, 255, 255, 255);
+}
+
+.simon-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.4 !important;
+  box-shadow: none !important;
+}
+
+.center-display {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120px; /* Size of the center circle */
+  height: 120px;
+  background-color: var(--color-surface-dark, #101028);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-text, #f0f0f0);
+  font-family: var(--font-accent-pixel, "Press Start 2P", cursive);
+  font-size: 0.9em;
+  border: 5px solid var(--color-border, #474787);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.message-display {
+  min-height: 1.5em; /* Prevent layout shifts */
+  margin: 15px 0;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--color-primary-accent, #da00ff);
+}
+
+.game-controls,
+.game-over-message {
+  margin-top: 20px;
+}
+/* Buttons use .arcade-button .pixel-button from global theme */
+
+.game-over-message {
+  padding: 25px;
+  background-color: var(--color-surface-secondary, #333);
+  border-radius: var(--border-radius-lg, 8px);
+  border: 2px solid var(--color-primary-accent, #da00ff);
+}
+.game-over-message h2 {
+  font-family: var(--font-accent-pixel);
+  color: var(--color-primary-accent, #da00ff);
+  margin-bottom: 10px;
+}
+.game-over-message p {
+  margin: 8px 0;
+  font-size: 1.1em;
+}
+.game-over-message span {
+  font-weight: bold;
+}
+.game-over-message button {
+  margin-top: 15px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .game-container {
+    padding: 20px;
+    max-width: 340px;
+  }
+  .game-header h1 {
+    font-size: 1.6em;
+  }
+  .simon-board {
+    width: 240px;
+    height: 240px;
+    gap: 10px;
+    padding: 10px;
+  }
+  .center-display {
+    width: 90px;
+    height: 90px;
+    font-size: 0.8em;
+    border-width: 4px;
+  }
+  .instructions {
+    font-size: 0.85em;
+  }
+}

@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getCoins() {
-    return parseInt(localStorage.getItem(COIN_STORAGE_KEY)) || 0;
+    return parseInt(localStorage.getItem(COIN_STORAGE_KEY)) || 10000;
   }
 
   function saveCoins(amount) {

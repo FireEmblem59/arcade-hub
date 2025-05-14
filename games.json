@@ -10,6 +10,16 @@
     "ownedByDefault": true
   },
   {
+    "id": "simon-says",
+    "name": "Simon Says",
+    "folderName": "Simon Says",
+    "description": "Test your memory! Repeat the ever-growing color sequence.",
+    "thumbnail": "games/Simon Says/thumbnail.png",
+    "entryPoint": "index.html",
+    "price": 100,
+    "ownedByDefault": false
+  },
+  {
     "id": "reaction-timer",
     "name": "Reaction Test",
     "folderName": "Reaction Timer",

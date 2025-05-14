@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simon Says Challenge</title>
+
+    <script>
+      let currentThemeId = localStorage.getItem("arcadeTheme") || "modern";
+      let themePath = `../../themes/${currentThemeId}.css`;
+
+      const themeLink = document.createElement("link");
+      themeLink.rel = "stylesheet";
+      themeLink.id = "theme-stylesheet";
+      themeLink.href = themePath;
+      document.head.appendChild(themeLink);
+
+      const defaultThemeLink = document.createElement("link");
+      defaultThemeLink.rel = "preload";
+      defaultThemeLink.as = "style";
+      defaultThemeLink.href = `../../themes/modern.css`;
+      document.head.appendChild(defaultThemeLink);
+    </script>
+
+    <link rel="stylesheet" href="style.css" />
+    <!-- Game-specific styles -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;500;700&family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="in-game-token-display-container">
+      <!-- Token display injected by JS -->
+    </div>
+
+    <div class="game-container">
+      <header class="game-header">
+        <h1>Simon Says!</h1>
+        <p class="instructions" id="instruction-text">
+          Watch the sequence, then repeat it!
+        </p>
+      </header>
+
+      <div class="simon-board">
+        <div class="simon-button" id="green" data-color="green"></div>
+        <div class="simon-button" id="red" data-color="red"></div>
+        <div class="simon-button" id="yellow" data-color="yellow"></div>
+        <div class="simon-button" id="blue" data-color="blue"></div>
+        <div class="center-display" id="center-display">
+          <span id="level-display">Level: 0</span>
+        </div>
+      </div>
+
+      <div id="message-display" class="message-display">
+        <!-- Messages like "Your Turn!", "Wrong!" -->
+      </div>
+
+      <div class="game-controls">
+        <button id="start-button" class="arcade-button pixel-button">
+          Start Game
+        </button>
+        <a href="../../index.html" class="hub-button arcade-button pixel-button"
+          >Back to Arcade Hub</a
+        >
+      </div>
+
+      <div id="game-over-message" class="game-over-message hidden">
+        <h2>Game Over!</h2>
+        <p>You reached Level <span id="final-level-display">0</span>.</p>
+        <p>You earned <span id="tokens-earned-display">0</span> tokens!</p>
+        <button id="play-again-button" class="arcade-button pixel-button">
+          Play Again
+        </button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

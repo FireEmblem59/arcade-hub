@@ -308,7 +308,8 @@ body {
   gap: 15px;
 }
 
-.hub-button {
+.hub-button,
+.play-again-button {
   background-color: var(--color-primary-accent);
   color: var(--color-secondary-accent, #ffd700);
   font-family: var(--font-accent-pixel, "Press Start 2P", cursive);
