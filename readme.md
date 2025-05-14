@@ -5,8 +5,9 @@ A modular web arcade hub featuring retro and modern-themed games. Earn tokens by
 ## Features ✨
 
 - **Game Hub**: Browse and launch games from a central interface.
-- **Dynamic Themes**: Switch between Retro and Modern visual themes.
-- **Token System**: Earn tokens by winning games (Memory Match implemented).
+- **Dynamic Themes**: Switch between Modern, Retro, and Cyberpunk visual themes.
+- **Shop System**: Purchase new games and cosmetic items like themes using tokens.
+- **Token System**: Earn tokens by playing games (Memory Match, Typing Speed Test, etc. implemented).
 - **Responsive Design**: Works on both desktop and mobile devices.
 - **Game Framework**: Easy to add new games through JSON configuration.
 
@@ -16,6 +17,7 @@ A modular web arcade hub featuring retro and modern-themed games. Earn tokens by
 - Vanilla JavaScript
 - Express.js (Local server)
 - Local Storage (Theme persistence & token tracking)
+- [html2canvas](https://html2canvas.hertzen.com) (for theme preview generation - development tool)
 
 ## Installation 🛠️
 
@@ -24,11 +26,11 @@ A modular web arcade hub featuring retro and modern-themed games. Earn tokens by
    git clone https://github.com/FireEmblem59/arcade-hub.git
    cd pixel-palace-arcade
    ```
-2. Install dependencies:
+2. Install dependencies: (not necessary)
    ```bash
    npm install express
    ```
-3. Start the server:
+3. Start the server: (or use live server if not using express)
    ```bash
    node server.js
    ```
@@ -36,28 +38,25 @@ A modular web arcade hub featuring retro and modern-themed games. Earn tokens by
 
 ## Games Overview 🕹️
 
-### Memory Match 👻
-
-- Match pairs of symbols to earn tokens
-- **Reward calculation**:
-  - Base moves for full reward: 10
-  - Maximum allowed moves: 20
-  - Maximum tokens: 100
-  - Formula: `Reward = max(0, 100 - (excess_moves * 10))`
-
-### Reaction Test ⚡ (Coming Soon!)
-
-- Test your click reaction speed
-- Earn tokens based on response time
+- Memory Match 👻
+- Reaction Test ⚡
+- Click Target 🎯
+- Typing Speed Test ⌨️
+- Stop the Bar 🚦
+- Quick Math ➕➖✖️➗
+- Lucky Card 🃏
 
 ---
 
 ## Theme Switching 🎨
 
-Toggle between visual styles using header buttons:
+Toggle between visual styles using the Emporium (Shop). The selected theme applies globally across the hub and supported games.
 
-- **Retro Theme**: Pixel-art styling (`Press Start 2P` font)
-- **Modern Theme**: Clean material design (`Roboto` font)
+- Modern Theme: Clean, sleek, and contemporary design (primarily uses Roboto font).
+
+- Retro Theme: Pixel-art styling with a classic 80s arcade vibe (primarily uses Press Start 2P font).
+
+- Cyberpunk Theme: Neon lights, digital rain, and a techy, monospaced aesthetic (primarily uses Roboto Mono, Aldrich, Orbitron fonts).
 
 All game thumbnails automatically adapt to the active theme!
 
@@ -72,16 +71,19 @@ Want to add your own game? Follow these steps:
    ```json
    {
      "id": "your-game-id",
-     "name": "Game Name",
-     "folderName": "Your Game Folder",
-     "description": "Brief description",
-     "thumbnail": "path/to/thumbnail.png",
-     "entryPoint": "game.html"
+     "name": "Your Game Name",
+     "folderName": "MyAwesomeGame",
+     "description": "A brief description of your game.",
+     "thumbnail": "games/MyAwesomeGame/assets/my_thumbnail.png", // Path to your base thumbnail
+     "entryPoint": "index.html", // Main HTML file for your game
+     "price": 500, // Or 0 if free
+     "ownedByDefault": false // Or true if free
    }
    ```
 3. Create themed assets:
    - `thumbnail_retro.png`
    - `thumbnail_modern.png`
+   - `thumbnail_cyberpunk.png`
 
 ## License 📄
 
