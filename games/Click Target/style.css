@@ -1,0 +1,185 @@
+/* arcade-hub/games/Click Target/style.css */
+/* This file uses CSS variables defined by the loaded theme CSS */
+
+body {
+  font-family: var(--font-primary, "Roboto", sans-serif);
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center game container vertically */
+  min-height: 100vh;
+  background-color: var(--color-bg, #222);
+  color: var(--color-text, #eee);
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent scrollbars from game area */
+}
+
+#in-game-token-display {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 10px 15px;
+  background-color: var(--color-surface-dark-alpha, rgba(12, 19, 36, 0.85));
+  color: var(--color-tokens, #ffd700);
+  border-radius: var(--border-radius-md, 5px);
+  font-family: var(--font-accent-pixel, "Press Start 2P", cursive);
+  font-size: 0.9em;
+  z-index: 1000;
+  border: 1px solid var(--color-primary-accent, #e94560);
+  box-shadow: var(--box-shadow-md, 0 3px 8px rgba(0, 0, 0, 0.4));
+}
+
+.game-container {
+  background-color: var(--color-surface-primary, #333);
+  padding: 25px 35px;
+  border-radius: var(--border-radius-lg, 10px);
+  box-shadow: var(--box-shadow-lg, 0 5px 20px rgba(0, 0, 0, 0.4));
+  text-align: center;
+  width: 100%;
+  max-width: 700px; /* Wider game area */
+  border: 2px solid var(--color-border, #555);
+}
+
+.game-header h1 {
+  font-family: var(--font-accent-pixel, "Press Start 2P", cursive);
+  color: var(--color-game-title, var(--color-primary-accent, #00e0c6));
+  margin-bottom: 10px;
+  font-size: 2em;
+  text-shadow: var(--text-shadow-accent);
+}
+.instructions {
+  font-size: 1em;
+  color: var(--color-text-muted, #ccc);
+  margin-bottom: 20px;
+}
+
+.game-area {
+  width: 100%;
+  height: 400px; /* Fixed height for clicking area */
+  background-color: var(
+    --color-bg-alt,
+    var(--color-surface-secondary, #444)
+  ); /* Slightly different from page BG */
+  border-radius: var(--border-radius-md, 8px);
+  margin: 0 auto 20px auto;
+  position: relative; /* For positioning the target */
+  overflow: hidden; /* Ensure target doesn't go outside */
+  cursor: crosshair; /* Change cursor over game area */
+  border: 1px solid var(--color-border-light, #666);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.target {
+  width: 50px; /* Size of the target */
+  height: 50px;
+  background-color: var(--color-danger, #ff4040); /* Target color */
+  border-radius: 50%; /* Make it a circle */
+  position: absolute; /* Positioned by JS */
+  cursor: pointer;
+  transition: transform 0.1s ease-out, background-color 0.1s ease-out;
+  box-shadow: 0 0 15px var(--color-danger, #ff4040);
+  border: 2px solid var(--color-text-on-accent, #fff);
+}
+.target:hover {
+  transform: scale(1.1);
+  background-color: color-mix(in srgb, var(--color-danger, #ff4040) 80%, white);
+}
+.target.clicked {
+  /* Visual feedback on click */
+  transform: scale(0.8);
+  background-color: var(--color-success, #00ff80);
+  box-shadow: 0 0 15px var(--color-success, #00ff80);
+  opacity: 0.5;
+}
+
+.game-stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: var(--color-surface-dark, #222);
+  padding: 12px 15px;
+  border-radius: var(--border-radius-md, 5px);
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  color: var(--color-text-muted);
+}
+.game-stats p {
+  margin: 0 10px;
+}
+.game-stats span {
+  font-weight: bold;
+  color: var(--color-primary-accent, #00e0c6);
+  font-family: var(--font-mono, "Roboto Mono");
+  font-size: 1.1em;
+}
+
+.start-message {
+  margin: 20px 0;
+}
+
+.game-over-message {
+  margin-top: 20px;
+  padding: 25px;
+  background-color: var(--color-surface-secondary, #333);
+  border-radius: var(--border-radius-lg, 8px);
+  border: 2px solid var(--color-primary-accent, #00e0c6);
+}
+.game-over-message h2 {
+  font-family: var(--font-accent-pixel);
+  color: var(--color-primary-accent, #00e0c6);
+  margin-bottom: 10px;
+}
+.game-over-message p {
+  margin: 8px 0;
+  font-size: 1.1em;
+}
+.game-over-message span {
+  font-weight: bold;
+}
+.game-over-message button {
+  margin-top: 15px;
+}
+
+.game-controls-footer {
+  /* For the "Back to Arcade Hub" button at the bottom */
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid var(--color-border, #555);
+}
+/* Buttons (.arcade-button, .pixel-button) get styling from global theme CSS */
+
+.hidden {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .game-container {
+    padding: 20px;
+  }
+  .game-header h1 {
+    font-size: 1.6em;
+  }
+  .game-area {
+    height: 300px;
+  }
+  .target {
+    width: 40px;
+    height: 40px;
+  }
+  .game-stats {
+    flex-direction: column;
+    gap: 8px;
+    font-size: 1em;
+  }
+}
+@media (max-width: 400px) {
+  .game-area {
+    height: 250px;
+  }
+  .target {
+    width: 35px;
+    height: 35px;
+  }
+}

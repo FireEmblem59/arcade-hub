@@ -1,0 +1,327 @@
+/* arcade-hub/retro.css */
+
+/* ============================================= */
+/* RETRO THEME - CSS VARIABLES                   */
+/* ============================================= */
+:root {
+  /* Typography */
+  --font-primary: "Roboto", sans-serif; /* Base for readability of paragraphs */
+  --font-secondary: "Verdana", sans-serif; /* Fallback */
+  --font-accent-pixel: "Press Start 2P", cursive;
+  --font-mono: "Consolas", "Courier New", monospace; /* Retro computer mono font */
+
+  /* Base Colors */
+  --color-bg: #1a1a2e; /* Dark blue/purple background */
+  --color-text: #e0e0e0; /* Light grey/off-white text */
+  --color-text-muted: #a0b0c0; /* Muted grey for secondary text */
+  --color-text-on-accent: #ffffff; /* White text on primary accent */
+  --color-text-on-dark: #e0e0e0; /* Light text on dark surfaces */
+
+  /* Surface Colors (for containers, cards, etc.) */
+  --color-surface-primary: #162447; /* Darker blue for main content surfaces */
+  --color-surface-secondary: #1f4068; /* Slightly lighter blue for alternates */
+  --color-surface-dark: #0c1324; /* Very dark for deep backgrounds or footers */
+
+  /* Accent Colors */
+  --color-accent-primary: #e94560; /* Bright Pink/Red - Main interactive color */
+  --color-accent-primary-darker: #c7304a; /* For hover/active states */
+  --color-accent-secondary: #ffc107; /* Gold/Yellow - Secondary accent */
+  --color-accent-secondary-darker: #e0a800;
+
+  /* Semantic Colors */
+  --color-success: #3adb76; /* Bright Green */
+  --color-danger: #cc4b37; /* Muted Red */
+  --color-warning: #ffae00; /* Orange/Yellow for warnings */
+  --color-info: #45a2ff; /* Bright Blue for info */
+
+  /* Borders & Shadows */
+  --color-border: #1f4068; /* Border color matching a surface */
+  --color-border-light: #2a3b5e; /* Lighter border for contrast */
+  --border-radius-sm: 3px; /* Sharper edges for retro */
+  --border-radius-md: 5px;
+  --border-radius-lg: 8px;
+  --box-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --box-shadow-md: 0 3px 8px rgba(0, 0, 0, 0.4);
+  --box-shadow-lg: 0 5px 15px rgba(0, 0, 0, 0.5);
+  --text-shadow-accent: 2px 2px 0px rgba(0, 0, 0, 0.5); /* Common retro text shadow */
+
+  /* Specific Arcade Elements */
+  --color-tokens: var(--color-accent-secondary); /* Gold for tokens */
+  --color-hub-title: var(
+    --color-text
+  ); /* Hub title often white/light in retro */
+  --color-game-title: var(
+    --color-primary-accent
+  ); /* Game titles use primary accent */
+}
+
+/* ============================================= */
+/* BASE & RESET STYLES                           */
+/* (Same as modern.css - these are theme-agnostic) */
+/* ============================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================= */
+/* TYPOGRAPHY                                    */
+/* (Uses variables defined above for retro look) */
+/* ============================================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.75em;
+  line-height: 1.3;
+  font-family: var(--font-accent-pixel); /* Pixel font for headings */
+  font-weight: normal; /* Pixel fonts usually don't need bold */
+  text-shadow: var(--text-shadow-accent);
+}
+h1 {
+  font-size: 2em;
+} /* Pixel fonts can appear larger */
+h2 {
+  font-size: 1.6em;
+}
+h3 {
+  font-size: 1.25em;
+}
+
+p {
+  margin-bottom: 1em;
+  font-family: var(--font-primary); /* Sans-serif for paragraphs */
+}
+
+a {
+  color: var(--color-primary-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+a:hover {
+  color: var(--color-accent-secondary); /* Use secondary accent for hover */
+  text-decoration: underline;
+}
+
+/* ============================================= */
+/* LAYOUT & CONTAINERS                           */
+/* (Same structure as modern.css, appearance changes via variables) */
+/* ============================================= */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.game-page-container {
+  width: 90%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 15px;
+}
+
+/* ============================================= */
+/* ARCADE HUB SPECIFIC (General Styles)          */
+/* ============================================= */
+
+.arcade-header,
+.shop-main-header {
+  background-color: var(--color-surface-primary);
+  padding: 20px 0;
+  border-bottom: 3px solid var(--color-primary-accent); /* Thicker, accented border */
+  box-shadow: var(--box-shadow-md);
+  margin-bottom: 30px;
+}
+
+.arcade-header .container,
+.shop-main-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.arcade-header-title,
+.shop-header-title {
+  font-family: var(--font-accent-pixel);
+  color: var(--color-hub-title); /* Usually light color for retro titles */
+  font-size: 1.8em;
+  margin: 0;
+  text-shadow: 2px 2px 0 var(--color-primary-accent),
+    3px 3px 0px rgba(0, 0, 0, 0.7); /* More pronounced shadow */
+}
+@media (max-width: 600px) {
+  .arcade-header-title,
+  .shop-header-title {
+    font-size: 1.5em;
+  }
+}
+
+.hub-user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.tokens-display {
+  background-color: var(--color-surface-secondary);
+  padding: 8px 15px;
+  border-radius: var(--border-radius-sm);
+  font-size: 1em;
+  font-family: var(--font-accent-pixel); /* Pixel font for token display text */
+  color: var(--color-text);
+  border: 1px solid var(--color-border-light);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.tokens-display #coin-balance {
+  font-weight: normal; /* Pixel font is already bold-ish */
+  color: var(--color-tokens);
+  /* font-family: var(--font-accent-pixel); /* Already inherited */
+}
+
+/* --- General Button Styles --- */
+/* All buttons use pixel font in retro theme */
+.arcade-button,
+.game-button,
+.hub-button,
+.shop-button,
+.action-button {
+  display: inline-block;
+  font-family: var(--font-accent-pixel);
+  font-weight: normal;
+  background-color: var(--color-primary-accent);
+  color: var(--color-text-on-accent);
+  padding: 12px 22px; /* Slightly larger padding for pixel buttons */
+  border: 2px outset color-mix(in srgb, var(--color-primary-accent) 80%, white); /* Outset border */
+  border-radius: var(--border-radius-sm); /* Sharper radius */
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    transform 0.1s ease;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2); /* Simple retro shadow */
+}
+.arcade-button:hover,
+.game-button:hover,
+.hub-button:hover,
+.shop-button:hover,
+.action-button:hover {
+  background-color: var(--color-accent-primary-darker);
+  border-color: color-mix(
+    in srgb,
+    var(--color-primary-accent-darker) 80%,
+    white
+  );
+  transform: translateY(-1px);
+}
+.arcade-button:active,
+.game-button:active,
+.hub-button:active,
+.shop-button:active,
+.action-button:active {
+  transform: translateY(1px); /* Pressed effect */
+  border-style: inset;
+  box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
+.arcade-button:disabled,
+.game-button:disabled,
+.hub-button:disabled,
+.shop-button:disabled,
+.action-button:disabled {
+  background-color: color-mix(in srgb, var(--color-text-muted) 50%, black);
+  color: var(--color-text-muted);
+  border-color: var(--color-text-muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+/* .pixel-button class is redundant if all buttons are pixel style in this theme */
+
+/* --- Footer --- */
+.arcade-footer,
+.shop-footer {
+  background-color: var(--color-surface-dark); /* Very dark footer */
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 20px 0;
+  margin-top: auto;
+  font-size: 0.9em;
+  border-top: 2px solid var(--color-surface-primary); /* Border matching header bg */
+}
+.arcade-footer p,
+.shop-footer p {
+  margin-bottom: 0;
+}
+.arcade-footer a,
+.shop-footer a {
+  color: var(--color-primary-accent);
+}
+
+/* --- In-Game Token Display --- */
+#in-game-token-display {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 10px 15px;
+  background-color: rgba(
+    12,
+    19,
+    36,
+    0.85
+  ); /* var(--color-surface-dark) with alpha */
+  color: var(--color-tokens);
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-accent-pixel);
+  font-size: 0.9em;
+  z-index: 1000;
+  border: 2px solid var(--color-primary-accent);
+  box-shadow: var(--box-shadow-md);
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+}
+
+/* Utility Classes (Same as modern.css) */
+.hidden {
+  display: none !important;
+}
+.text-center {
+  text-align: center;
+}
+.margin-top-md {
+  margin-top: 20px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+
+/* ============================================= */
+/* GAME CARD STYLES (for game cards in index.html) */
+/* ============================================= */
+.game-card img {
+  background-color: var(--color-surface-secondary);
+}

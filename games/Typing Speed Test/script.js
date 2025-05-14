@@ -60,6 +60,48 @@ document.addEventListener("DOMContentLoaded", () => {
     "A journey of a thousand miles begins with a single step.",
     "To be or not to be, that is the question.",
     "All that glitters is not gold.",
+    "Sphinx of black quartz, judge my vow.",
+    "The five boxing wizards jump quickly.",
+    "Crazy Fredrick bought many very exquisite opal jewels.",
+    "Jackdaws love my big sphinx of quartz.",
+    "We promptly judged antique ivory buckles for the next prize.",
+    "Waltz, bad nymph, for quick jigs vex.",
+    "Zany duff jumps quick on vexing wizard path.",
+    "Big fjords vex quick waltzing nymph.",
+    "Do or do not, there is no try.",
+    "Stay hungry, stay foolish.",
+    "Talk is cheap. Show me the code.",
+    "Simplicity is the ultimate sophistication.",
+    "Time is an illusion. Lunchtime doubly so.",
+    "Imagination is more important than knowledge.",
+    "Knowledge speaks, but wisdom listens.",
+    "Not all those who wander are lost.",
+    "The only true wisdom is in knowing you know nothing.",
+    "Fear is the mind-killer.",
+    "Life is what happens when you’re busy making other plans.",
+    "The early bird catches the worm.",
+    "Better late than never.",
+    "Actions speak louder than words.",
+    "Every cloud has a silver lining.",
+    "Birds of a feather flock together.",
+    "A picture is worth a thousand words.",
+    "When in Rome, do as the Romans do.",
+    "Practice makes perfect.",
+    "You miss 100% of the shots you don’t take.",
+    "It always seems impossible until it’s done.",
+    "Success is not final, failure is not fatal.",
+    "The best way out is always through.",
+    "Be yourself; everyone else is already taken.",
+    "In the middle of difficulty lies opportunity.",
+    "Well begun is half done.",
+    "Dream big and dare to fail.",
+    "What we think, we become.",
+    "You must be the change you wish to see in the world.",
+    "The purpose of our lives is to be happy.",
+    "Don’t cry because it’s over, smile because it happened.",
+    "Life is short, and the world is wide.",
+    "Happiness is not something ready made.",
+    "Adventure is worthwhile in itself.",
   ];
 
   let targetText = "";
@@ -125,16 +167,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     targetChars.forEach((charSpan, index) => {
       const typedChar = typedText[index];
+      charSpan.className = ""; // Reset class first
+
       if (typedChar == null) {
-        // Not yet typed
-        charSpan.className = "";
+        if (index === typedText.length) {
+          charSpan.classList.add("current");
+        }
       } else if (typedChar === charSpan.textContent) {
-        charSpan.className = "correct";
+        charSpan.classList.add("correct");
       } else {
-        charSpan.className = "incorrect";
+        charSpan.classList.add("incorrect");
         currentErrors++;
       }
     });
+    if (typedText.length === targetText.length && typedText === targetText) {
+      if (targetChars[targetText.length - 1]) {
+        targetChars[targetText.length - 1].classList.remove("current");
+      }
+    }
     errors = currentErrors; // Store total errors for final accuracy
 
     // Accuracy Calculation
@@ -174,10 +224,8 @@ document.addEventListener("DOMContentLoaded", () => {
     finalWpm.textContent = finalWPMValue;
     finalAccuracy.textContent = finalAccuracyValue < 0 ? 0 : finalAccuracyValue;
 
-    // Token Calculation (example)
     let tokensEarned = 0;
     if (finalWPMValue >= 20 && finalAccuracyValue >= 80) {
-      // Basic threshold
       tokensEarned = Math.floor(finalWPMValue / 10); // 1 token per 10 WPM
       tokensEarned += Math.floor(finalAccuracyValue / 20); // 1 token per 20% accuracy over 80%
       tokensEarned = Math.max(1, tokensEarned); // Min 1 token if conditions met

@@ -1,0 +1,334 @@
+/* arcade-hub/cyberpunk.css */
+
+/* ============================================= */
+/* CYBERPUNK THEME - CSS VARIABLES               */
+/* ============================================= */
+:root {
+  /* Typography */
+  --font-primary: "Roboto Mono", "Consolas", monospace; /* Monospaced for main text */
+  --font-secondary: "Arial", sans-serif;
+  --font-accent-pixel: "Press Start 2P", cursive; /* Can still be used for some game titles */
+  --font-display-tech: "Aldrich", "Orbitron", sans-serif; /* Modern, techy display font (add to Google Fonts import if used heavily) */
+
+  /* Base Colors */
+  --color-bg: #0d0221; /* Very dark deep blue/purple */
+  --color-text: #b0c4ff; /* Light, slightly desaturated blue/lavender text */
+  --color-text-muted: #6a737d; /* Muted grey for less important text */
+  --color-text-on-accent: #0d0221; /* Dark text for bright neon accents */
+  --color-text-on-dark: #b0c4ff; /* Light text for dark surfaces */
+
+  /* Surface Colors */
+  --color-surface-primary: #1a0a34; /* Dark purple/blue surface */
+  --color-surface-secondary: #2c1250; /* Slightly lighter variant */
+  --color-surface-dark: #070111; /* Almost black */
+
+  /* Accent Colors - NEONS! */
+  --color-accent-primary: #ff00ff; /* Magenta/Hot Pink */
+  --color-accent-primary-darker: #cc00cc;
+  --color-accent-secondary: #00f0ff; /* Cyan/Electric Blue */
+  --color-accent-secondary-darker: #00c0cc;
+
+  /* Semantic Colors (Cyberpunked) */
+  --color-success: #00ff80; /* Neon Green */
+  --color-danger: #ff4040; /* Bright Red */
+  --color-warning: #ffdd00; /* Electric Yellow */
+  --color-info: var(--color-accent-secondary);
+
+  /* Borders & Shadows & Effects */
+  --color-border: var(--color-accent-secondary); /* Neon borders */
+  --color-border-light: color-mix(
+    in srgb,
+    var(--color-accent-secondary) 50%,
+    transparent
+  );
+  --border-radius-sm: 2px; /* Sharp, angular edges */
+  --border-radius-md: 4px;
+  --border-radius-lg: 6px;
+  --box-shadow-sm: 0 1px 5px rgba(0, 0, 0, 0.4);
+  --box-shadow-md: 0 3px 10px rgba(0, 0, 0, 0.5);
+  --box-shadow-lg: 0 5px 20px rgba(0, 0, 0, 0.6);
+  --text-shadow-neon: 0 0 5px var(--color-text), 0 0 10px var(--color-text),
+    0 0 15px var(--color-accent-primary), 0 0 20px var(--color-accent-primary);
+  --text-shadow-neon-secondary: 0 0 5px var(--color-text),
+    0 0 10px var(--color-text), 0 0 15px var(--color-accent-secondary),
+    0 0 20px var(--color-accent-secondary);
+  --box-shadow-neon-glow: 0 0 10px var(--color-accent-primary),
+    0 0 20px var(--color-accent-primary-darker);
+
+  /* Specific Arcade Elements */
+  --color-tokens: var(--color-warning);
+  --color-hub-title: var(--color-accent-primary);
+  --color-game-title: var(--color-accent-secondary);
+}
+
+/* ============================================= */
+/* BASE & RESET STYLES                           */
+/* ============================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-primary); /* Monospaced default for cyberpunk */
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  /* Optional: subtle scanline effect */
+  /* background-image: linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 100% 3px; */
+}
+
+/* ============================================= */
+/* TYPOGRAPHY                                    */
+/* ============================================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.75em;
+  line-height: 1.3;
+  font-family: var(
+    --font-display-tech,
+    var(--font-accent-pixel)
+  ); /* Techy or Pixel font */
+  font-weight: normal;
+  text-transform: uppercase; /* Often seen in cyberpunk */
+  letter-spacing: 1px;
+}
+h1 {
+  font-size: 2em;
+  text-shadow: var(--text-shadow-neon);
+  color: var(--color-accent-primary);
+}
+h2 {
+  font-size: 1.6em;
+  text-shadow: var(--text-shadow-neon-secondary);
+  color: var(--color-accent-secondary);
+}
+h3 {
+  font-size: 1.25em;
+  color: var(--color-text);
+} /* Less intense shadow for smaller heads */
+
+p {
+  margin-bottom: 1em;
+  font-family: var(--font-primary);
+  color: var(--color-text);
+}
+
+a {
+  color: var(--color-accent-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+a:hover {
+  color: color-mix(in srgb, var(--color-accent-secondary) 70%, white);
+  text-shadow: 0 0 5px var(--color-accent-secondary);
+  text-decoration: none; /* Avoid underline if using text-shadow */
+}
+
+/* ============================================= */
+/* LAYOUT & CONTAINERS                           */
+/* ============================================= */
+.container,
+.game-page-container {
+  width: 90%;
+  max-width: 1100px; /* Cyberpunk can have slightly wider feel */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.game-page-container {
+  max-width: 750px;
+} /* Games still a bit narrower */
+
+/* ============================================= */
+/* ARCADE HUB SPECIFIC (General Styles)          */
+/* ============================================= */
+
+.arcade-header,
+.shop-main-header {
+  background-color: rgba(
+    26,
+    10,
+    52,
+    0.5
+  ); /* var(--color-surface-primary) with transparency */
+  backdrop-filter: blur(5px); /* Frosted glass effect */
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-accent-primary);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5),
+    0 0 15px var(--color-accent-primary-darker);
+  margin-bottom: 30px;
+  position: sticky; /* Optional: sticky header */
+  top: 0;
+  z-index: 900;
+}
+
+.arcade-header .container,
+.shop-main-header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.arcade-header-title,
+.shop-header-title {
+  font-family: var(--font-display-tech, var(--font-accent-pixel));
+  color: var(--color-hub-title);
+  font-size: 2em; /* Larger title */
+  margin: 0;
+  text-shadow: var(--text-shadow-neon);
+  letter-spacing: 2px;
+}
+@media (max-width: 600px) {
+  .arcade-header-title,
+  .shop-header-title {
+    font-size: 1.6em;
+  }
+}
+
+.hub-user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.tokens-display {
+  background-color: rgba(13, 2, 33, 0.7); /* var(--color-bg) with more alpha */
+  padding: 8px 15px;
+  border-radius: var(--border-radius-sm);
+  font-size: 1em;
+  font-family: var(--font-mono); /* Monospaced for token display */
+  color: var(--color-text);
+  border: 1px solid var(--color-accent-secondary);
+  box-shadow: inset 0 0 8px var(--color-accent-secondary-darker);
+}
+.tokens-display #coin-balance {
+  font-weight: bold;
+  color: var(--color-tokens);
+}
+
+/* --- General Button Styles --- */
+.arcade-button,
+.game-button,
+.hub-button,
+.shop-button,
+.action-button {
+  display: inline-block;
+  font-family: var(--font-display-tech, var(--font-accent-pixel));
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-color: transparent;
+  color: var(--color-accent-primary);
+  padding: 10px 20px;
+  border: 2px solid var(--color-accent-primary);
+  border-radius: var(--border-radius-sm); /* Sharp corners */
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease,
+    transform 0.1s ease;
+  position: relative; /* For potential pseudo-element effects */
+}
+.arcade-button:hover,
+.game-button:hover,
+.hub-button:hover,
+.shop-button:hover,
+.action-button:hover {
+  background-color: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  box-shadow: 0 0 10px var(--color-accent-primary),
+    0 0 15px var(--color-accent-primary-darker);
+  transform: translateY(-2px);
+}
+.arcade-button:active,
+.game-button:active,
+.hub-button:active,
+.shop-button:active,
+.action-button:active {
+  transform: translateY(0px);
+  background-color: var(--color-accent-primary-darker);
+  box-shadow: 0 0 5px var(--color-accent-primary-darker);
+}
+.arcade-button:disabled,
+.game-button:disabled,
+.hub-button:disabled,
+.shop-button:disabled,
+.action-button:disabled {
+  background-color: transparent;
+  color: var(--color-text-muted);
+  border-color: var(--color-text-muted);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* --- Footer --- */
+.arcade-footer,
+.shop-footer {
+  background-color: var(--color-surface-dark);
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 20px 0;
+  margin-top: auto;
+  font-size: 0.9em;
+  border-top: 1px solid var(--color-accent-secondary);
+  font-family: var(--font-mono);
+}
+.arcade-footer p,
+.shop-footer p {
+  margin-bottom: 0;
+}
+.arcade-footer a,
+.shop-footer a {
+  color: var(--color-accent-secondary);
+}
+
+/* --- In-Game Token Display --- */
+#in-game-token-display {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 10px 15px;
+  background-color: rgba(26, 10, 52, 0.8); /* Semi-transparent surface */
+  color: var(--color-tokens);
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-display-tech, var(--font-accent-pixel));
+  font-size: 0.9em;
+  z-index: 1000;
+  border: 1px solid var(--color-accent-primary);
+  box-shadow: var(--box-shadow-neon-glow);
+  text-shadow: 0 0 5px var(--color-tokens);
+}
+
+/* Utility Classes */
+.hidden {
+  display: none !important;
+}
+.text-center {
+  text-align: center;
+}
+
+/* ============================================= */
+/* GAME CARD STYLES (for game cards in index.html) */
+/* ============================================= */
+.game-card img {
+  background-color: var(--color-surface-secondary);
+}

@@ -1,0 +1,327 @@
+/* arcade-hub/shop/shop.css */
+:root {
+  /* Fallback variables if no theme CSS is loaded */
+  --font-primary: "Roboto", sans-serif;
+  --font-accent-pixel: "Press Start 2P", cursive;
+  --font-mono: "Roboto Mono", monospace;
+  --font-casino: "Limelight", cursive;
+  --border-radius-sm: 4px;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+  --box-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --box-shadow-md: 0 3px 8px rgba(0, 0, 0, 0.3);
+  --box-shadow-lg: 0 5px 15px rgba(0, 0, 0, 0.4);
+  --text-shadow-simple: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#in-game-token-display {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 10px 15px;
+  background-color: var(--color-surface-dark, rgba(12, 19, 36, 0.85));
+  color: var(--color-tokens);
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-casino);
+  font-size: 0.9em;
+  z-index: 1000;
+  border: 1px solid var(--color-primary-accent);
+  box-shadow: var(--box-shadow-md);
+  text-shadow: var(--text-shadow-simple);
+}
+
+.shop-main-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--color-primary-accent);
+}
+.shop-header-title {
+  font-family: var(--font-casino, var(--font-casino));
+  font-size: 2.5em;
+  color: var(--color-primary-accent);
+  text-shadow: var(--text-shadow-accent, 2px 2px #000);
+  margin-bottom: 15px;
+}
+.shop-main-header .hub-button {
+  margin-top: 10px;
+}
+
+.shop-container {
+  width: 90%;
+  max-width: 960px;
+  margin: 0 auto;
+  flex-grow: 1;
+}
+.shop-section {
+  margin-bottom: 40px;
+  padding: 25px;
+  background-color: var(--color-surface-primary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow-md);
+  border: 1px solid var(--color-border);
+}
+.shop-section h2 {
+  font-family: var(--font-casino);
+  font-size: 1.6em;
+  color: var(--color-text);
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--color-primary-accent);
+  text-shadow: var(--text-shadow-simple);
+}
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 25px;
+}
+
+.shop-item {
+  background-color: var(--color-surface-secondary);
+  padding: 20px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-border-light);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--box-shadow-sm);
+}
+.shop-item:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--box-shadow-lg);
+  border-color: var(--color-primary-accent);
+}
+
+.item-preview {
+  width: 100%;
+  height: 130px;
+  border-radius: var(--border-radius-sm);
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0; /* Image fills */
+  color: var(--color-text-muted);
+  font-family: var(--font-primary);
+}
+.item-preview img {
+  /* For theme image previews */
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+}
+
+/* Card Back Previews (CSS Based) */
+.item-preview.card-back-preview {
+  padding: 10px;
+  background-color: var(--color-surface-alt);
+}
+.item-preview .mini-card-back {
+  width: 70px;
+  height: 105px;
+  border-radius: var(--border-radius-sm);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-casino);
+  font-size: 1.8em;
+}
+.item-preview.card-back-preview-default .mini-card-back {
+  background: linear-gradient(135deg, #8b0000, #b22222);
+  border: 2px outset #ff4500;
+  color: #ffd700;
+}
+.item-preview.card-back-preview-default .mini-card-back::before {
+  content: "?";
+}
+.item-preview.card-back-preview-blue-stripes .mini-card-back {
+  background: linear-gradient(
+    45deg,
+    #3498db 25%,
+    #2980b9 25%,
+    #2980b9 50%,
+    #3498db 50%,
+    #3498db 75%,
+    #2980b9 75%,
+    #2980b9 100%
+  );
+  background-size: 20px 20px;
+  border: 2px solid #1f638f;
+}
+.item-preview.card-back-preview-blue-stripes .mini-card-back::before {
+  content: "♢";
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.5em;
+}
+.item-preview.card-back-preview-green-grid .mini-card-back {
+  background-color: #203a2b;
+  background-image: linear-gradient(
+      rgba(46, 204, 113, 0.4) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(46, 204, 113, 0.4) 1px, transparent 1px);
+  background-size: 12px 12px;
+  border: 2px solid #27ae60;
+}
+.item-preview.card-back-preview-green-grid .mini-card-back::before {
+  content: "#";
+  color: rgba(46, 204, 113, 0.9);
+  font-size: 1.8em;
+}
+
+/* Sound Pack Previews */
+.item-preview.sound-pack-preview {
+  border-color: var(--color-border-light);
+  font-family: var(--font-casino);
+  color: var(--color-text);
+  font-size: 0.8em;
+}
+.item-preview.sound-pack-preview::before {
+  content: "🔊";
+  font-size: 3.5em;
+  opacity: 0.8;
+  color: var(--color-text);
+  display: block;
+}
+
+.item-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  color: var(--color-text);
+  font-family: var(--font-primary);
+}
+.item-description {
+  font-size: 0.9em;
+  color: var(--color-text-muted);
+  margin-bottom: 15px;
+  flex-grow: 1;
+  font-family: var(--font-primary);
+  line-height: 1.5;
+}
+.item-price {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: var(--color-tokens);
+  margin-bottom: 15px;
+  font-family: var(--font-mono);
+}
+.item-price::before {
+  content: "Cost: ";
+  font-weight: normal;
+  color: var(--color-text-muted);
+  font-family: var(--font-primary);
+}
+
+.shop-item .arcade-button {
+  /* Ensure base .arcade-button class is applied by JS for theme styles */
+  width: 100%;
+  padding: 12px 0;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+/* Specific colors for shop action buttons, overriding theme if necessary */
+.shop-item .buy-button {
+  background-color: var(--color-success) !important;
+  color: var(--color-text-on-accent, white) !important;
+}
+.shop-item .buy-button:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--color-success) 80%,
+    black
+  ) !important;
+}
+.shop-item .buy-button:disabled {
+  background-color: var(--color-text-muted) !important;
+  color: color-mix(in srgb, var(--color-text-muted) 70%, black) !important;
+  cursor: not-allowed !important;
+}
+.shop-item .select-button {
+  background-color: var(--color-info) !important;
+  color: var(--color-text-on-accent, white) !important;
+}
+.shop-item .select-button:hover {
+  background-color: color-mix(in srgb, var(--color-info) 80%, black) !important;
+}
+.shop-item .equipped-button {
+  background-color: var(--color-equipped, #9b59b6) !important;
+  color: var(--color-text-on-accent, white) !important;
+  cursor: default !important;
+}
+
+.shop-footer {
+  background-color: var(--color-surface-primary);
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-surface-primary);
+  color: var(--color-text-muted);
+  font-size: 0.9em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .shop-main-header .shop-header-title {
+    font-size: 1.8em;
+  }
+  .shop-section h2 {
+    font-size: 1.4em;
+  }
+  .items-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+  .item-preview {
+    height: 110px;
+  }
+  .item-preview .mini-card-back {
+    width: 55px;
+    height: 82px;
+    font-size: 1.3em;
+  }
+}
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  .shop-container {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .shop-section {
+    padding: 15px;
+  }
+  .items-grid {
+    grid-template-columns: 1fr;
+  }
+}

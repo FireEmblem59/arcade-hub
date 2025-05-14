@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Click Target Challenge</title>
+
+    <script>
+      let currentThemeId = localStorage.getItem("arcadeTheme") || "modern";
+      let themePath = `../../themes/${currentThemeId}.css`;
+
+      const themeLink = document.createElement("link");
+      themeLink.rel = "stylesheet";
+      themeLink.id = "theme-stylesheet";
+      themeLink.href = themePath;
+      document.head.appendChild(themeLink);
+
+      const defaultThemeLink = document.createElement("link");
+      defaultThemeLink.rel = "preload";
+      defaultThemeLink.as = "style";
+      defaultThemeLink.href = `../../themes/modern.css`;
+      document.head.appendChild(defaultThemeLink);
+    </script>
+
+    <link rel="stylesheet" href="style.css" />
+    <!-- Game-specific styles -->
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;500;700&family=Roboto+Mono&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="in-game-token-display-container">
+      <!-- Token display injected by JS -->
+    </div>
+
+    <div class="game-container">
+      <header class="game-header">
+        <h1>Target Practice!</h1>
+        <p class="instructions" id="instruction-text">
+          Click the targets as they appear!
+        </p>
+      </header>
+
+      <div id="game-area" class="game-area">
+        <!-- Target will be dynamically added here by JS -->
+        <div id="target" class="target hidden"></div>
+      </div>
+
+      <div class="game-stats">
+        <p>Score: <span id="score-display">0</span></p>
+        <p>Time Left: <span id="time-left-display">30</span>s</p>
+        <p class="hidden">
+          Targets Hit: <span id="targets-hit-display">0</span>
+        </p>
+        <!-- Alternative mode -->
+      </div>
+
+      <div id="start-message" class="start-message">
+        <button id="start-game-button" class="arcade-button pixel-button">
+          Start Game
+        </button>
+      </div>
+
+      <div id="game-over-message" class="game-over-message hidden">
+        <h2>Time's Up!</h2>
+        <p>Your final score: <span id="final-score-display">0</span></p>
+        <p>You earned <span id="tokens-earned-display">0</span> tokens!</p>
+        <button id="play-again-button" class="arcade-button pixel-button">
+          Play Again
+        </button>
+      </div>
+
+      <div class="game-controls-footer">
+        <a href="../../index.html" class="hub-button arcade-button pixel-button"
+          >Back to Arcade Hub</a
+        >
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

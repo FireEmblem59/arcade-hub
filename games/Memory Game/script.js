@@ -4,6 +4,7 @@ function saveTokensToLocalStorage(amount) {
   if (amount <= 0) return;
   let currentTokens = parseInt(localStorage.getItem(ARCADE_TOKENS_KEY)) || 0;
   localStorage.setItem(ARCADE_TOKENS_KEY, currentTokens + amount);
+  updateTokenDisplayInGame(currentTokens + amount);
 }
 
 function createTokenDisplay() {
@@ -32,7 +33,6 @@ function updateTokenDisplayInGame(tokens) {
 }
 
 function getCurrentTokens() {
-  // Helper if not already in this game's script
   return parseInt(localStorage.getItem(ARCADE_TOKENS_KEY)) || 0;
 }
 

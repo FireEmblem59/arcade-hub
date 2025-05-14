@@ -1,0 +1,75 @@
+{
+  "themes": [
+    {
+      "id": "modern",
+      "name": "Modern Clean",
+      "description": "Sleek and contemporary. Your default style!",
+      "price": 0,
+      "imagePreview": "img/theme_previews/modern_preview.png",
+      "ownedByDefault": true
+    },
+    {
+      "id": "retro",
+      "name": "Retro Wave",
+      "description": "Classic 80s arcade vibe.",
+      "price": 75,
+      "imagePreview": "img/theme_previews/retro_preview.png",
+      "ownedByDefault": false
+    },
+    {
+      "id": "cyberpunk",
+      "name": "Cyber Grid",
+      "description": "Neon lights and digital rain.",
+      "price": 150,
+      "imagePreview": "img/theme_previews/cyberpunk_preview.png",
+      "ownedByDefault": false
+    }
+  ],
+  "memoryCardBacks": [
+    {
+      "id": "default",
+      "name": "Classic Red (CSS)",
+      "description": "The standard stylish red card back.",
+      "price": 0,
+      "previewClass": "card-back-preview-default",
+      "cssClass": "card-back-default",
+      "ownedByDefault": true
+    },
+    {
+      "id": "blue_pattern_css",
+      "name": "Blue Stripes (CSS)",
+      "description": "Cool blue stripes design.",
+      "price": 50,
+      "previewClass": "card-back-preview-blue-stripes",
+      "cssClass": "card-back-blue-stripes",
+      "ownedByDefault": false
+    },
+    {
+      "id": "green_grid_css",
+      "name": "Green Grid (CSS)",
+      "description": "A digital green grid pattern.",
+      "price": 60,
+      "previewClass": "card-back-preview-green-grid",
+      "cssClass": "card-back-green-grid",
+      "ownedByDefault": false
+    }
+  ],
+  "soundPacks": [
+    {
+      "id": "default_sounds",
+      "name": "Arcade Classics",
+      "description": "The familiar blips and bloops.",
+      "price": 0,
+      "previewClass": "sound-pack-preview",
+      "ownedByDefault": true
+    },
+    {
+      "id": "chiptune_power",
+      "name": "Chiptune Power-Up",
+      "description": "Energetic 8-bit soundscapes.",
+      "price": 100,
+      "previewClass": "sound-pack-preview",
+      "ownedByDefault": false
+    }
+  ]
+}

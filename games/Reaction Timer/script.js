@@ -27,7 +27,6 @@ function updateTokenDisplayInGame(tokens) {
 }
 
 function getCurrentTokens() {
-  // Helper if not already in this game's script
   return parseInt(localStorage.getItem(ARCADE_TOKENS_KEY)) || 0;
 }
 
@@ -35,6 +34,7 @@ function saveTokensToLocalStorage(amount) {
   if (amount <= 0) return; // Don't save zero/negative rewards
   let currentTokens = parseInt(localStorage.getItem(ARCADE_TOKENS_KEY)) || 0;
   localStorage.setItem(ARCADE_TOKENS_KEY, currentTokens + amount);
+  updateTokenDisplayInGame(currentTokens + amount);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize
   updateTokenDisplayInGame(getCurrentTokens());
   updateBestTimeDisplay();
-  collectRewardButton.classList.add("hidden");
 
   // Core Game Functions
   function startGame() {
@@ -63,7 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
     reactionBox.className = "reaction-box state-waiting";
     instructionText.textContent = "Wait for Green...";
     resultText.classList.add("hidden");
-    collectRewardButton.classList.add("hidden");
     startButton.disabled = true;
 
     const randomDelay = Math.random() * 4000 + 1000;
@@ -109,19 +107,14 @@ document.addEventListener("DOMContentLoaded", () => {
       reactionBox.className = "reaction-box state-result";
       instructionText.textContent = "Your Reaction Time:";
       resultText.textContent = `${reactionTime.toFixed(0)} ms`;
-      collectRewardButton.textContent = `Return to Hub (Earned ${reward} Token${
-        reward === 1 ? "" : "s"
-      })`;
     } else {
       // Too soon click
       reactionBox.className = "reaction-box state-clicked-too-soon";
       instructionText.textContent = "Too Soon!";
       resultText.textContent = "Try to wait for green.";
-      collectRewardButton.textContent = "Return to Hub";
     }
 
     resultText.classList.remove("hidden");
-    collectRewardButton.classList.remove("hidden");
     resetStartButton();
   }
 
@@ -149,7 +142,4 @@ document.addEventListener("DOMContentLoaded", () => {
   // Event Listeners
   startButton.addEventListener("click", startGame);
   reactionBox.addEventListener("click", handleBoxClick);
-  collectRewardButton.addEventListener("click", () => {
-    window.location.href = "../../index.html";
-  });
 });

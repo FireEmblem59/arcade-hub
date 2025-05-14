@@ -1,36 +1,29 @@
-/* === 1. BASE STYLES (Theme Agnostic) === */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* arcade-hub/style.css */
+/* This file uses CSS variables defined in the loaded theme (modern.css, retro.css, etc.) */
 
-body {
-  line-height: 1.6;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
-}
-
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
-}
-
-header .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
+/* HUB SPECIFIC MAIN CONTENT STYLING */
 main {
-  flex-grow: 1;
   padding: 30px 0;
+  flex-grow: 1; /* Ensure main content takes available space */
 }
 
+.main-section-title {
+  /* For "Choose Your Adventure!" */
+  font-family: var(--font-accent-pixel);
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.8em;
+  color: var(
+    --color-primary-accent,
+    #e94560
+  ); /* Fallback if variable not loaded */
+  text-shadow: var(
+    --text-shadow-accent,
+    none
+  ); /* Use theme's text shadow or none */
+}
+
+/* GAME GRID & CARDS */
 .game-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -38,21 +31,32 @@ main {
 }
 
 .game-card {
-  border-radius: 8px;
+  background-color: var(
+    --color-surface-secondary,
+    #1f4068
+  ); /* Uses theme variable or fallback */
+  color: var(
+    --color-text-on-dark,
+    var(--color-text, #e0e0e0)
+  ); /* Text color for card content */
+  border-radius: var(--border-radius-md, 8px);
   overflow: hidden;
+  box-shadow: var(--box-shadow-md, 0 4px 8px rgba(0, 0, 0, 0.3));
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   display: flex;
   flex-direction: column;
+  border: 1px solid var(--color-border-light, transparent); /* Subtle border from theme */
 }
 
 .game-card:hover {
   transform: translateY(-5px);
+  box-shadow: var(--box-shadow-lg, 0 6px 12px rgba(0, 0, 0, 0.4));
+  border-color: var(--color-primary-accent, #e94560);
 }
 
 .game-card img {
   display: block;
   object-position: 80% 30%;
-  background-color: #010101;
   max-width: 100%;
   max-height: 100%;
   width: auto;
@@ -62,305 +66,159 @@ main {
 
 .card-content {
   padding: 15px;
-  flex-grow: 1;
+  flex-grow: 1; /* Allows description to take space and push button down */
   display: flex;
   flex-direction: column;
+}
+
+.card-content h3 {
+  font-family: var(
+    --font-primary
+  ); /* Or var(--font-accent-pixel) if you prefer */
+  font-weight: 700; /* Or normal if using pixel font */
+  font-size: 1.3em;
+  margin-top: 0; /* Reset margin if needed */
+  margin-bottom: 8px;
+  color: var(--color-text-muted, #b0b0b0);
 }
 
 .card-content p {
   font-size: 0.9em;
   margin-bottom: 15px;
+  color: var(--color-text-muted, #b0b0b0);
   flex-grow: 1;
+  line-height: 1.5;
 }
 
 .play-button {
-  display: inline-block;
+  /* This is the button ON each game card */
+  /* Uses general .arcade-button styles from theme.css */
+  /* Add any specific overrides for play buttons here if needed */
+  margin-top: auto; /* Pushes button to the bottom of the card */
+  font-size: 0.9em !important; /* Make play button text slightly smaller if using pixel font */
+  padding: 8px 15px !important; /* Adjust padding */
+}
+
+/* Specific styling for the shop access button in the header if needed */
+.hub-user-actions {
+  /* Wrapper for tokens and shop button */
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between tokens and shop button */
+}
+
+.shop-access-button.arcade-button.pixel-button {
+  /* Making it specific */
+  background-color: var(--color-accent-secondary, #ffc107);
+  color: var(
+    --color-bg,
+    #162447
+  ); /* Text color contrasts with its own background */
+  font-size: 0.8em; /* Pixel buttons can be a bit large */
   padding: 10px 15px;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  text-align: center;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  margin-top: auto; /* Stick to the bottom */
-  border: none; /* Remove default border */
-  cursor: pointer;
+  border-width: 2px; /* If theme has outset buttons */
+}
+.shop-access-button.arcade-button.pixel-button:hover {
+  background-color: var(--color-accent-secondary-darker, #e0a800);
 }
 
-footer {
-  text-align: center;
-  padding: 15px 0;
-  margin-top: auto; /* Pushes footer to bottom */
-}
-
-footer p {
-  font-size: 0.9em;
-}
-
-/* Basic Theme Switcher Styles (add to your HTML) */
-.theme-switcher {
-  padding: 10px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.theme-switcher button {
-  padding: 8px 15px;
-  margin: 0 5px;
-  border: 1px solid; /* Border color will be set by theme */
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: "Roboto", sans-serif; /* Consistent font for buttons */
-  transition: background-color 0.2s, color 0.2s;
-}
-
-/* === 2. RETRO THEME STYLES === */
-body.theme-retro {
-  font-family: "Roboto", sans-serif; /* Base font */
-  background-color: #1a1a2e; /* Dark blue/purple */
-  color: #e0e0e0; /* Light grey for text */
-}
-
-body.theme-retro header {
-  background-color: #162447; /* Darker blue */
-  color: #e0e0e0;
-  padding: 20px 0;
-  border-bottom: 3px solid #e94560; /* Accent color */
-}
-
-body.theme-retro header h1 {
-  font-family: "Press Start 2P", cursive;
-  font-size: 1.8em;
-  color: #f0f0f0; /* Bright white for title */
-  text-shadow: 2px 2px #e94560; /* Accent shadow */
-}
-
-body.theme-retro .user-info {
-  font-size: 1.1em;
-  background-color: #1f4068; /* Slightly lighter blue */
-  padding: 8px 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-body.theme-retro #coin-balance {
-  font-weight: bold;
-  color: #ffc107; /* Gold color for coins */
-}
-
-body.theme-retro main h2 {
-  font-family: "Press Start 2P", cursive;
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 1.5em;
-  color: #e94560; /* Accent color */
-}
-
-body.theme-retro .game-card {
-  background-color: #1f4068; /* Card background */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  border: 1px solid #2a3b5e; /* Subtle border */
-}
-
-body.theme-retro .game-card:hover {
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-  border-color: #e94560;
-}
-
-body.theme-retro .game-card img {
-  border-bottom: 2px solid #e94560; /* Accent border */
-}
-
-body.theme-retro .card-content h3 {
-  font-family: "Roboto", sans-serif; /* Keep card titles readable */
-  font-weight: 700;
-  font-size: 1.3em;
-  margin-bottom: 8px;
-  color: #f0f0f0; /* Brighter title text */
-}
-
-body.theme-retro .card-content p {
-  color: #b0b0b0; /* Lighter grey for description */
-}
-
-body.theme-retro .play-button {
-  background-color: #e94560; /* Accent color */
-  color: #ffffff;
-}
-
-body.theme-retro .play-button:hover {
-  background-color: #c7304a; /* Darker accent on hover */
-}
-
-body.theme-retro footer {
-  background-color: #162447; /* Same as header */
-  color: #a0a0a0;
-  border-top: 2px solid #1f4068;
-}
-
-body.theme-retro .theme-switcher button {
-  background-color: #1f4068;
-  color: #e0e0e0;
-  border-color: #e94560;
-}
-body.theme-retro .theme-switcher button:hover {
-  background-color: #e94560;
-  color: #162447;
-}
-
-/* === 3. MODERN THEME STYLES === */
-body.theme-modern {
-  font-family: "Roboto", sans-serif;
-  background-color: #f4f6f8; /* Light grey background */
-  color: #333; /* Dark text */
-}
-
-body.theme-modern header {
-  background-color: #ffffff;
-  color: #333;
-  padding: 20px 0;
-  border-bottom: 1px solid #dee2e6; /* Subtle border */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-body.theme-modern header h1 {
-  font-family: "Roboto", sans-serif; /* Modern font */
-  font-weight: 700;
-  font-size: 2em;
-  color: #007bff; /* Primary blue accent */
-  text-shadow: none;
-}
-
-body.theme-modern .user-info {
-  font-size: 1em;
-  background-color: #e9ecef;
-  padding: 8px 15px;
-  border-radius: 5px;
-  color: #495057;
-  box-shadow: none;
-}
-
-body.theme-modern #coin-balance {
-  font-weight: bold;
-  color: #007bff; /* Primary blue accent for coins */
-}
-
-body.theme-modern main h2 {
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 1.8em;
-  color: #343a40; /* Dark heading color */
-}
-
-body.theme-modern .game-card {
-  background-color: #ffffff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0; /* Lighter border for cards */
-}
-
-body.theme-modern .game-card:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  border-color: #007bff;
-}
-
-body.theme-modern .game-card img {
-  border-bottom: 1px solid #f0f0f0; /* Very subtle separator */
-}
-
-body.theme-modern .card-content h3 {
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  font-size: 1.2em;
-  margin-bottom: 10px;
-  color: #212529; /* Darker text for card titles */
-}
-
-body.theme-modern .card-content p {
-  color: #6c757d; /* Grey text for description */
-}
-
-body.theme-modern .play-button {
-  background-color: #007bff; /* Primary blue */
-  color: #ffffff;
-}
-
-body.theme-modern .play-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-
-body.theme-modern footer {
-  background-color: #343a40; /* Dark footer */
-  color: #f8f9fa; /* Light text on dark footer */
-  border-top: none;
-}
-
-body.theme-modern .theme-switcher button {
-  background-color: #e9ecef;
-  color: #007bff;
-  border-color: #007bff;
-}
-body.theme-modern .theme-switcher button:hover {
-  background-color: #007bff;
-  color: #ffffff;
-}
-
-/* === RESPONSIVENESS (Theme Agnostic Layout Changes) === */
+/* RESPONSIVE ADJUSTMENTS FOR HUB-SPECIFIC ELEMENTS */
 @media (max-width: 768px) {
-  /* Adjustments for header H1 size based on theme font */
-  body.theme-retro header h1 {
+  .main-section-title {
     font-size: 1.5em;
   }
-  body.theme-modern header h1 {
-    font-size: 1.7em;
-  }
-
-  /* Adjustments for main H2 size based on theme font */
-  body.theme-retro main h2 {
-    font-size: 1.3em;
-  }
-  body.theme-modern main h2 {
-    font-size: 1.6em;
-  }
-
   .game-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+  .card-content h3 {
+    font-size: 1.2em;
   }
 }
 
 @media (max-width: 480px) {
-  header .container {
+  /* Header items might stack */
+  .arcade-header .container {
     flex-direction: column;
-    gap: 10px;
+    align-items: center; /* Center items when stacked */
   }
-  body.theme-retro header h1 {
+  .hub-user-actions {
+    margin-top: 10px; /* Add space when stacked */
+  }
+
+  .main-section-title {
     font-size: 1.3em;
   }
-  body.theme-modern header h1 {
-    font-size: 1.5em;
-  }
-
-  body.theme-retro main h2 {
-    font-size: 1.2em;
-  }
-  body.theme-modern main h2 {
-    font-size: 1.4em;
-  }
-
-  .game-card {
-    margin-bottom: 20px; /* Add some space when they stack */
-  }
   .game-grid {
-    grid-template-columns: 1fr; /* Stack cards on very small screens */
+    grid-template-columns: 1fr; /* Stack cards */
+  }
+  .game-card img {
+    height: 180px; /* Taller images when cards are full width */
   }
 }
 
-#coin-text {
-  padding: 8px 12px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #ffd700;
-  border-radius: 5px;
-  font-family: "Press Start 2P", cursive;
-  font-size: 0.9em;
-  z-index: 1000;
+/* --- STYLES FOR PURCHASABLE GAMES ON HUB --- */
+
+.game-card.locked-game {
+  opacity: 0.7; /* Make it look slightly faded */
+  position: relative; /* For positioning an overlay or icon */
+  /* filter: grayscale(50%); Optional: make it less colorful */
+}
+
+.game-card.locked-game::before {
+  /* Optional: Lock icon overlay */
+  content: "🔒"; /* Or use an SVG icon */
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.8em;
+  color: var(--color-text-muted, #aaa);
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 5px 8px;
+  border-radius: var(--border-radius-sm, 4px);
+  z-index: 1;
+}
+.game-card.locked-game:hover::before {
+  color: var(--color-text, #fff);
+}
+
+.game-card-action {
+  /* Wrapper for the play/buy button */
+  margin-top: auto; /* Pushes it to the bottom of the card content */
+  width: 100%;
+}
+
+.buy-game-button {
+  /* This button should also have .arcade-button for base theme styling */
+  /* Specifics for buy button */
+  background-color: var(
+    --color-success,
+    #28a745
+  ) !important; /* Green for buy, !important if overriding theme .arcade-button */
+  color: var(--color-text-on-accent, #fff) !important;
+  width: 100%; /* Make buy button full width of its container */
+  box-sizing: border-box;
+}
+.buy-game-button:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--color-success, #28a745) 80%,
+    black
+  ) !important;
+}
+.buy-game-button:disabled {
+  background-color: var(--color-text-muted, #6c757d) !important;
+  border-color: var(--color-text-muted, #6c757d) !important;
+  color: color-mix(
+    in srgb,
+    var(--color-text-muted, #6c757d) 70%,
+    #000
+  ) !important;
+  opacity: 0.7;
+}
+
+/* Ensure play buttons on cards are also full width if desired for consistency */
+.game-card-action .play-button {
+  width: 100%;
+  box-sizing: border-box;
 }

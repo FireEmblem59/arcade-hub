@@ -1,100 +1,166 @@
+/* arcade-hub/games/Typing Speed Test/style.css */
+
+:root {
+  --font-primary: "Roboto", sans-serif;
+  --font-mono: "Roboto Mono", "Courier New", Courier, monospace;
+  --font-accent: "Press Start 2P", cursive;
+
+  --color-bg: #1e2227; /* Darker, cool background */
+  --color-surface: #2a2f35; /* For containers */
+  --color-surface-alt: #353b42; /* For interactive elements or highlights */
+  --color-text: #e0e5ea;
+  --color-text-muted: #9ba4ae;
+  --color-accent: #00e0c6; /* Bright teal/cyan */
+  --color-accent-dark: #00b39f;
+  --color-correct: #00e0c6; /* Accent for correct typing */
+  --color-incorrect-bg: rgba(
+    255,
+    77,
+    77,
+    0.2
+  ); /* Transparent red for incorrect bg */
+  --color-incorrect-text: #ff8080; /* Lighter red for incorrect text */
+  --color-caret: var(--color-accent);
+
+  --border-radius: 8px;
+  --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: var(--font-primary);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-start; /* Allow scrolling if content is long */
   min-height: 100vh;
-  background-color: #343a40; /* Dark grey */
-  color: #f8f9fa; /* Light text */
+  background-color: var(--color-bg);
+  color: var(--color-text);
   margin: 0;
   padding: 20px;
   box-sizing: border-box;
 }
 
 .game-container {
-  background-color: #495057; /* Medium grey */
-  padding: 25px 35px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+  background-color: var(--color-surface);
+  padding: 30px 40px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
   text-align: center;
   width: 100%;
-  max-width: 700px; /* Wider for typing */
+  max-width: 750px; /* Slightly wider for typing comfort */
+  border-top: 4px solid var(--color-accent);
 }
 
 .game-header h1 {
-  font-family: "Press Start 2P", cursive;
-  color: #66fcf1; /* Cyan accent */
-  margin-bottom: 25px;
-  font-size: 2em;
+  font-family: var(--font-accent);
+  color: var(--color-accent);
+  margin-bottom: 30px;
+  font-size: 2.2em;
+  text-shadow: 0 0 10px rgba(0, 224, 198, 0.3);
 }
 
 .test-area {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  position: relative; /* For potential future elements like a caret */
 }
 
 .text-to-type {
-  background-color: #212529; /* Very dark grey */
-  color: #ced4da; /* Lighter grey for text */
-  padding: 20px;
-  border-radius: 8px;
-  font-size: 1.2em;
-  line-height: 1.6;
-  margin-bottom: 15px;
-  min-height: 100px; /* Ensure space for text */
+  background-color: var(--color-surface-alt);
+  color: var(--color-text-muted);
+  padding: 25px;
+  border-radius: var(--border-radius);
+  font-size: 1.3em; /* Larger text to type */
+  line-height: 1.7;
+  margin-bottom: 20px;
+  min-height: 120px;
   text-align: left;
-  white-space: pre-wrap; /* Preserve spaces and newlines from JS */
-  font-family: "Roboto Mono", monospace; /* Monospaced font for typing */
+  white-space: pre-wrap;
+  font-family: var(--font-mono);
+  border: 1px solid #444a51;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Character styling within text-to-type */
+.text-to-type span {
+  transition: color 0.1s ease-out, background-color 0.1s ease-out;
+}
+.text-to-type .current {
+  /* For the character the caret is on */
+  /* background-color: rgba(0, 224, 198, 0.15); */
+  border-bottom: 2px solid var(--color-caret);
+  padding-bottom: 1px; /* Adjust to make border look like underline */
 }
 .text-to-type .correct {
-  color: #66fcf1;
-} /* Cyan for correctly typed part */
+  color: var(--color-correct);
+}
 .text-to-type .incorrect {
-  background-color: #721c24;
-  color: #f8d7da;
-  text-decoration: underline wavy red;
-} /* Red background for errors */
+  background-color: var(--color-incorrect-bg);
+  color: var(--color-incorrect-text);
+  border-radius: 2px; /* Slight rounding for the error highlight */
+  /* text-decoration: underline wavy var(--color-incorrect-text); /* Keep or remove */
+}
 
 .typing-input {
   width: 100%;
-  min-height: 100px;
-  padding: 15px;
-  border: 2px solid #6c757d;
-  border-radius: 8px;
-  font-size: 1.1em;
-  background-color: #f8f9fa;
-  color: #212529;
+  min-height: 100px; /* Or adjust based on text-to-type min-height */
+  padding: 20px;
+  border: 2px solid #444a51;
+  border-radius: var(--border-radius);
+  font-size: 1.2em;
+  background-color: #fff; /* White background for typing input */
+  color: #222; /* Dark text for input */
   box-sizing: border-box;
-  resize: none; /* Disable textarea resizing */
-  font-family: "Roboto Mono", monospace; /* Monospaced font for typing */
+  resize: none;
+  font-family: var(--font-mono);
+  line-height: 1.7; /* Match line-height of text-to-type for alignment */
 }
 .typing-input:focus {
   outline: none;
-  border-color: #66fcf1;
-  box-shadow: 0 0 8px rgba(102, 252, 241, 0.5);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 10px rgba(0, 224, 198, 0.4);
+}
+.typing-input::placeholder {
+  color: #aaa;
 }
 .typing-input:disabled {
   background-color: #e9ecef;
+  color: #888;
+}
+
+#warning-text {
+  /* Your cheater warning */
+  margin-top: 10px;
+  padding: 5px;
+  font-size: 0.9em;
 }
 
 .game-stats {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #212529;
-  padding: 10px 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  font-size: 1em;
+  background-color: var(--color-surface-alt);
+  padding: 15px 20px;
+  border-radius: var(--border-radius);
+  margin-bottom: 25px;
+  font-size: 1.1em; /* Slightly larger stats */
+  border: 1px solid #444a51;
 }
 .game-stats p {
-  margin: 0 10px;
+  margin: 0 15px;
+  color: var(--color-text-muted);
+}
+.game-stats p > span {
+  color: var(--color-text-muted);
 }
 .game-stats span {
-  font-weight: bold;
-  color: #66fcf1;
+  /* Target the value part */
+  font-weight: 700; /* Bolder values */
+  color: var(--color-accent);
+  font-family: var(--font-mono); /* Monospaced for numbers */
+  font-size: 1.1em; /* Make values stand out */
 }
 
 .result-message {
+  /* For intermediate messages, not really used in this version */
   min-height: 1.5em;
   margin-bottom: 15px;
   font-weight: bold;
@@ -105,89 +171,161 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 .game-controls button,
 .game-controls a.hub-button {
-  font-family: "Press Start 2P", cursive;
-  background-color: #66fcf1;
-  color: #212529;
+  font-family: var(--font-accent);
+  background-color: var(--color-accent);
+  color: var(--color-bg); /* Dark text on accent button */
   border: none;
-  padding: 12px 20px;
-  border-radius: 5px;
+  padding: 14px 25px; /* Larger buttons */
+  border-radius: var(--border-radius);
   cursor: pointer;
-  font-size: 0.9em;
-  transition: background-color 0.2s ease;
+  font-size: 1em; /* Larger button text */
+  transition: background-color 0.2s ease, transform 0.1s ease;
   text-decoration: none;
-  min-width: 140px;
+  min-width: 160px;
   text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 .game-controls button:hover,
 .game-controls a.hub-button:hover {
-  background-color: #45a29e;
+  background-color: var(--color-accent-dark);
+  transform: translateY(-2px);
+}
+.game-controls button:active,
+.game-controls a.hub-button:active {
+  transform: translateY(0px);
 }
 .game-controls button:disabled {
-  background-color: #adb5bd;
+  background-color: #5e6770;
+  color: #9ba4ae;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .final-summary {
-  margin-top: 25px;
-  padding: 20px;
-  background-color: #212529;
-  border-radius: 8px;
-  border: 2px solid #66fcf1;
+  margin-top: 30px;
+  padding: 25px;
+  background-color: var(--color-surface-alt);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-accent);
+  box-shadow: 0 0 20px rgba(0, 224, 198, 0.1);
 }
 .final-summary h2 {
-  font-family: "Press Start 2P", cursive;
-  color: #66fcf1;
-  margin-bottom: 10px;
+  font-family: var(--font-accent);
+  color: var(--color-accent);
+  margin-bottom: 15px;
+  font-size: 1.6em;
 }
 .final-summary p {
-  margin: 8px 0;
-  font-size: 1.1em;
+  margin: 10px 0;
+  font-size: 1.15em;
+  color: var(--color-text);
 }
 .final-summary span {
   font-weight: bold;
+  color: #fff; /* Brighter for values in summary */
+  font-family: var(--font-mono);
 }
 .final-summary a.hub-button {
-  margin-top: 15px;
+  /* Ensure "Return to Hub" button is styled consistently */
+  margin-top: 20px;
   display: inline-block;
+  /* Uses styles from .game-controls a.hub-button */
 }
 
 .hidden {
   display: none !important;
 }
 
-/* In-game token display (copy from other games or use a shared CSS if you create one) */
+/* In-game token display styling */
 #in-game-token-display {
   position: fixed;
-  top: 10px;
-  right: 10px;
-  padding: 8px 12px;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #ffd700; /* Or use the game's accent color like #66fcf1 */
-  border-radius: 5px;
-  font-family: "'Press Start 2P', cursive";
+  top: 15px;
+  right: 15px;
+  padding: 10px 15px;
+  background-color: rgba(
+    42,
+    47,
+    53,
+    0.85
+  ); /* var(--color-surface) with alpha */
+  color: var(--color-accent);
+  border-radius: var(--border-radius);
+  font-family: var(--font-accent);
   font-size: 0.9em;
   z-index: 1000;
+  border: 1px solid var(--color-accent);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+/* Responsive Adjustments */
+@media (max-width: 700px) {
+  .game-container {
+    padding: 20px;
+  }
   .game-header h1 {
-    font-size: 1.6em;
+    font-size: 1.8em;
   }
   .text-to-type {
-    font-size: 1em;
+    font-size: 1.1em;
+    padding: 20px;
+    min-height: 100px;
   }
   .typing-input {
-    font-size: 1em;
+    font-size: 1.1em;
+    padding: 15px;
+    min-height: 80px;
   }
   .game-stats {
     flex-direction: column;
-    gap: 5px;
-    font-size: 0.9em;
+    gap: 8px;
+    font-size: 1em;
+    padding: 10px;
+  }
+  .game-stats p {
+    margin: 0 5px;
+  }
+  .game-stats span {
+    font-size: 1em;
+  }
+  .final-summary p {
+    font-size: 1.05em;
+  }
+}
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+  .game-container {
+    padding: 15px;
+  }
+  .game-header h1 {
+    font-size: 1.5em;
+  }
+  .text-to-type {
+    font-size: 1em;
+    padding: 15px;
+    line-height: 1.6;
+  }
+  .typing-input {
+    font-size: 1em;
+    line-height: 1.6;
+  }
+  .game-controls button,
+  .game-controls a.hub-button {
+    font-size: 0.8em;
+    padding: 12px 18px;
+    min-width: auto;
+  }
+  #in-game-token-display {
+    font-size: 0.8em;
+    padding: 6px 10px;
+    top: 5px;
+    right: 5px;
   }
 }

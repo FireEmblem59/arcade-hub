@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Coming Soon!</title>
+
+    <script>
+      // Dynamically load theme CSS (relative to this game's folder)
+      const ACTIVE_THEME_KEY = "arcadeTheme";
+      const DEFAULT_THEME_ID = "modern"; // Should match your hub's default
+      let currentThemeId =
+        localStorage.getItem(ACTIVE_THEME_KEY) || DEFAULT_THEME_ID;
+      // Path from games/Placeholder Game/ to themes/ is ../../themes/
+      let themePath = `../../themes/${currentThemeId}.css`;
+
+      const themeLink = document.createElement("link");
+      themeLink.rel = "stylesheet";
+      themeLink.id = "theme-stylesheet";
+      themeLink.href = themePath;
+      document.head.appendChild(themeLink);
+
+      // Optional: Preload default theme CSS
+      const defaultThemeLink = document.createElement("link");
+      defaultThemeLink.rel = "preload";
+      defaultThemeLink.as = "style";
+      defaultThemeLink.href = `../../themes/${DEFAULT_THEME_ID}.css`;
+      document.head.appendChild(defaultThemeLink);
+    </script>
+
+    <!-- Google Fonts (include fonts likely used by themes) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;500;700&family=Roboto+Mono&family=Limelight&family=Aldrich&family=Orbitron&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Basic Reset & Body - Will be largely influenced by loaded theme.css */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(
+          --font-primary,
+          "Roboto",
+          sans-serif
+        ); /* Use theme font or fallback */
+        background-color: var(
+          --color-bg,
+          #121212
+        ); /* Use theme bg or fallback */
+        color: var(--color-text, #e0e0e0); /* Use theme text or fallback */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        text-align: center;
+        padding: 20px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .container {
+        background-color: var(
+          --color-surface-primary,
+          rgba(40, 40, 40, 0.8)
+        ); /* Theme surface or fallback */
+        padding: 40px 50px;
+        border-radius: var(
+          --border-radius-lg,
+          12px
+        ); /* Theme radius or fallback */
+        box-shadow: var(
+          --box-shadow-lg,
+          0 5px 25px rgba(0, 0, 0, 0.5)
+        ); /* Theme shadow or fallback */
+        border: 1px solid var(--color-border, #555); /* Theme border or fallback */
+        max-width: 500px;
+      }
+
+      h1 {
+        font-family: var(
+          --font-accent-pixel,
+          "Press Start 2P",
+          cursive
+        ); /* Theme pixel font */
+        font-size: 2em;
+        color: var(
+          --color-primary-accent,
+          #00f0ff
+        ); /* Theme primary accent or fallback */
+        margin-bottom: 20px;
+        text-shadow: var(
+          --text-shadow-accent,
+          2px 2px #000
+        ); /* Theme shadow or fallback */
+      }
+
+      p {
+        font-size: 1.2em;
+        line-height: 1.6;
+        margin-bottom: 30px;
+        color: var(--color-text-muted, #aaa); /* Theme muted text or fallback */
+      }
+
+      .hub-link {
+        display: inline-block;
+        font-family: var(
+          --font-accent-pixel,
+          "Press Start 2P",
+          cursive
+        ); /* Theme pixel font */
+        background-color: var(
+          --color-accent-secondary,
+          #ffc107
+        ); /* Theme secondary accent or fallback */
+        color: var(--color-bg, #121212); /* Text contrasts with button bg */
+        padding: 12px 25px;
+        text-decoration: none;
+        border-radius: var(--border-radius-md, 8px); /* Theme radius */
+        font-size: 1em;
+        transition: background-color 0.2s ease, transform 0.2s ease;
+        box-shadow: var(--box-shadow-sm, 0 2px 5px rgba(0, 0, 0, 0.2));
+      }
+
+      .hub-link:hover {
+        background-color: color-mix(
+          in srgb,
+          var(--color-accent-secondary, #ffc107) 80%,
+          black
+        ); /* Darken on hover */
+        transform: translateY(-2px);
+        color: var(--color-text-on-accent);
+      }
+
+      /* Basic "Loading..." or animation placeholder (optional) */
+      .loader {
+        border: 5px solid var(--color-surface-secondary, #f3f3f3); /* Light grey */
+        border-top: 5px solid var(--color-primary-accent, #3498db); /* Blue */
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1.5s linear infinite;
+        margin: 0 auto 30px auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.5em;
+        }
+        p {
+          font-size: 1em;
+        }
+        .hub-link {
+          font-size: 0.9em;
+          padding: 10px 20px;
+        }
+        .container {
+          padding: 30px 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Coming Soon!</h1>
+      <div class="loader"></div>
+      <p>
+        This awesome new game is currently under construction. Our best
+        developers (and a few enthusiastic hamsters) are working hard on it.
+        Check back later!
+      </p>
+      <a href="../../index.html" class="hub-link">Back to Arcade Hub</a>
+    </div>
+
+    <script>
+      // No game-specific JavaScript needed for a static "Coming Soon" page.
+      // The theme loading script in <head> is the main JS here.
+      console.log(
+        "Placeholder game page loaded. Current theme:",
+        localStorage.getItem("arcadeTheme") || "modern"
+      );
+    </script>
+  </body>
+</html>

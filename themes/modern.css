@@ -1,0 +1,322 @@
+/* arcade-hub/modern.css */
+
+/* ============================================= */
+/* MODERN THEME - CSS VARIABLES                  */
+/* ============================================= */
+:root {
+  /* Typography */
+  --font-primary: "Roboto", sans-serif;
+  --font-secondary: "Arial", sans-serif; /* Fallback */
+  --font-casino: "Limelight", cursive;
+  --font-accent-pixel: "Press Start 2P", cursive;
+  --font-mono: "Roboto Mono", "Courier New", monospace;
+
+  /* Base Colors */
+  --color-bg: #f4f6f8; /* Light grey background */
+  --color-text: #212529; /* Dark text for readability */
+  --color-text-muted: #6c757d; /* Lighter grey for secondary text */
+  --color-text-on-accent: #ffffff; /* Text color for on accent backgrounds */
+  --color-text-on-dark: #f8f9fa; /* Text color for dark backgrounds */
+
+  /* Surface Colors (for containers, cards, etc.) */
+  --color-surface-primary: #ffffff; /* Main content background (e.g., cards) */
+  --color-surface-secondary: #e9ecef; /* Slightly off-white/grey for alternates */
+  --color-surface-dark: #343a40; /* Darker surface for contrast, like footers */
+
+  /* Accent Colors */
+  --color-accent-primary: #007bff; /* Bright Blue - Main interactive color */
+  --color-accent-primary-darker: #0056b3; /* For hover/active states */
+  --color-accent-secondary: #6f42c1; /* Purple - Secondary accent */
+  --color-accent-secondary-darker: #5a32a3;
+
+  /* Semantic Colors */
+  --color-success: #28a745;
+  --color-danger: #dc3545;
+  --color-warning: #ffc107; /* Yellow for warnings, tokens */
+  --color-info: #17a2b8; /* Teal/Info */
+
+  /* Borders & Shadows */
+  --color-border: #dee2e6; /* Standard border color */
+  --color-border-light: #f1f3f5; /* Lighter border */
+  --border-radius-sm: 0.25rem; /* 4px */
+  --border-radius-md: 0.5rem; /* 8px */
+  --border-radius-lg: 0.75rem; /* 12px */
+  --box-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --box-shadow-md: 0 3px 8px rgba(0, 0, 0, 0.07);
+  --box-shadow-lg: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+  /* Specific Arcade Elements */
+  --color-tokens: var(--color-warning);
+  --color-hub-title: var(--color-accent-primary);
+  --color-game-title: var(--color-accent-secondary);
+}
+
+/* ============================================= */
+/* BASE & RESET STYLES                           */
+/* ============================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px; /* Base font size */
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  margin: 0; /* Already in reset, but good to reiterate */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================================= */
+/* TYPOGRAPHY                                    */
+/* ============================================= */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.75em;
+  line-height: 1.3;
+  font-weight: 500; /* Medium weight for modern look */
+}
+h1 {
+  font-size: 2.25em;
+}
+h2 {
+  font-size: 1.75em;
+}
+h3 {
+  font-size: 1.35em;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: var(--color-accent-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+a:hover {
+  color: var(--color-accent-primary-darker);
+  text-decoration: underline;
+}
+
+/* ============================================= */
+/* LAYOUT & CONTAINERS                           */
+/* ============================================= */
+.container {
+  /* General purpose container for centering content */
+  width: 90%;
+  max-width: 1200px; /* Max width for hub pages */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.game-page-container {
+  /* Specific for game pages if they need different max-width */
+  width: 90%;
+  max-width: 800px; /* Games might be narrower */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 15px;
+}
+
+/* ============================================= */
+/* ARCADE HUB SPECIFIC (General Styles)          */
+/* These classes would be used in index.html and shop.html */
+/* ============================================= */
+
+/* --- Main Arcade Header (e.g., for index.html, shop.html) --- */
+.arcade-header,
+.shop-main-header {
+  /* Use consistent class names */
+  background-color: var(--color-surface-primary);
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--box-shadow-sm);
+  margin-bottom: 30px; /* Space below header */
+}
+
+.arcade-header .container,
+.shop-main-header .container {
+  /* To align items inside header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Allow wrapping on small screens */
+  gap: 15px;
+}
+
+.arcade-header-title,
+.shop-header-title {
+  /* For the main H1 in header */
+  font-family: var(--font-casino);
+  color: var(--color-hub-title);
+  font-size: 1.8em; /* Adjust as needed */
+  margin: 0; /* Remove default h1 margin */
+  text-shadow: none; /* Modern themes usually avoid text shadows */
+}
+@media (max-width: 600px) {
+  .arcade-header-title,
+  .shop-header-title {
+    font-size: 1.5em;
+  }
+}
+
+/* --- User Info / Token Display in Hub/Shop Header --- */
+.hub-user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Space between token display and shop button if grouped */
+}
+.tokens-display {
+  /* For the "Tokens: X" in the header */
+  background-color: var(--color-surface-secondary);
+  padding: 8px 15px;
+  border-radius: var(--border-radius-sm);
+  font-size: 1em;
+  font-weight: 500;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+.tokens-display #coin-balance {
+  /* The actual number */
+  font-weight: bold;
+  color: var(--color-tokens);
+  font-family: var(--font-mono);
+}
+
+/* --- General Button Styles --- */
+.arcade-button,
+.game-button,
+.hub-button,
+.shop-button,
+.action-button {
+  display: inline-block;
+  font-family: var(
+    --font-primary
+  ); /* Modern themes often use sans-serif for buttons */
+  font-weight: 500;
+  background-color: var(--color-accent-primary);
+  color: var(--color-text-on-accent);
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: var(--box-shadow-sm);
+}
+.arcade-button:hover,
+.game-button:hover,
+.hub-button:hover,
+.shop-button:hover,
+.action-button:hover {
+  background-color: var(--color-accent-primary-darker);
+  color: var(--color-text-on-dark);
+  transform: translateY(-1px);
+}
+.arcade-button:active,
+.game-button:active,
+.hub-button:active,
+.shop-button:active,
+.action-button:active {
+  transform: translateY(0px);
+}
+.arcade-button:disabled,
+.game-button:disabled,
+.hub-button:disabled,
+.shop-button:disabled,
+.action-button:disabled {
+  background-color: var(--color-text-muted);
+  color: color-mix(in srgb, var(--color-text-muted) 60%, white);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Pixel font buttons (e.g., for game titles or special actions) */
+.pixel-button {
+  font-family: var(--font-casino) !important; /* Override */
+  font-size: 0.9em; /* Pixel fonts are often larger */
+  padding: 12px 22px;
+}
+
+/* --- Footer --- */
+.arcade-footer,
+.shop-footer {
+  /* Use consistent class names */
+  background-color: var(--color-surface-dark);
+  color: var(--color-text-on-dark);
+  text-align: center;
+  padding: 20px 0;
+  margin-top: auto; /* Pushes footer to bottom */
+  font-size: 0.9em;
+}
+.arcade-footer p,
+.shop-footer p {
+  margin-bottom: 0;
+  color: var(--color-text-muted); /* Muted text in dark footer */
+}
+.arcade-footer a,
+.shop-footer a {
+  color: var(--color-accent-primary); /* Links in footer */
+}
+
+/* --- In-Game Token Display (used by individual game pages) --- */
+/* This provides a default styling. Game-specific CSS can override. */
+#in-game-token-display {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 10px 15px;
+  background-color: rgba(
+    42,
+    47,
+    53,
+    0.85
+  ); /* var(--color-surface) with alpha from another theme */
+  color: var(--color-tokens); /* Use the token color variable */
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-casino);
+  font-size: 0.9em;
+  z-index: 1000; /* Ensure it's on top */
+  border: 1px solid var(--color-accent-primary); /* Use an accent border */
+  box-shadow: var(--box-shadow-md);
+}
+
+/* Utility Classes (Optional) */
+.hidden {
+  display: none !important;
+}
+.text-center {
+  text-align: center;
+}
+.margin-top-md {
+  margin-top: 20px;
+}
+.margin-bottom-md {
+  margin-bottom: 20px;
+}
+
+/* ============================================= */
+/* GAME CARD STYLES (for game cards in index.html) */
+/* ============================================= */
+.game-card img {
+  background-color: var(--color-surface-secondary);
+}

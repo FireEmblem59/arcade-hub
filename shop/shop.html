@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pixel Palace Emporium - Shop</title>
+
+    <script>
+      // Dynamically load theme CSS
+      let currentThemeId = localStorage.getItem("arcadeTheme") || "modern";
+      let themePath = `../themes/${currentThemeId}.css`; // Path from shop/ to themes/
+
+      const themeLink = document.createElement("link");
+      themeLink.rel = "stylesheet";
+      themeLink.id = "theme-stylesheet"; // Crucial ID for JS to find and update
+      themeLink.href = themePath;
+      document.head.appendChild(themeLink);
+
+      const defaultThemeLink = document.createElement("link"); // Preload default
+      defaultThemeLink.rel = "preload";
+      defaultThemeLink.as = "style";
+      defaultThemeLink.href = `../themes/modern.css`;
+      document.head.appendChild(defaultThemeLink);
+    </script>
+
+    <!-- Shop-specific CSS (loaded AFTER the theme CSS) -->
+    <link rel="stylesheet" href="shop.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&family=Limelight&family=Aldrich&family=Orbitron&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="in-game-token-display-container">
+      <!-- Token display div (ID: in-game-token-display) will be injected here by shop.js -->
+    </div>
+
+    <header class="shop-main-header arcade-header">
+      <div class="container">
+        <h1 class="shop-header-title arcade-header-title">
+          Pixel Palace Emporium
+        </h1>
+        <a href="../index.html" class="hub-button arcade-button pixel-button"
+          >Back to Arcade</a
+        >
+      </div>
+    </header>
+
+    <main class="shop-container">
+      <section id="themes-section" class="shop-section">
+        <h2>Arcade Hub Themes</h2>
+        <div id="theme-items-container" class="items-grid">
+          <!-- Theme items loaded by shop.js -->
+        </div>
+      </section>
+
+      <section id="memoryCardBacks-section" class="shop-section">
+        <h2>Memory Game Card Backs</h2>
+        <div id="card-back-items-container" class="items-grid">
+          <!-- Card back items loaded by shop.js -->
+        </div>
+      </section>
+
+      <section id="soundPacks-section" class="shop-section">
+        <h2>Sound Packs</h2>
+        <div id="sound-pack-items-container" class="items-grid">
+          <!-- Sound pack items loaded by shop.js -->
+        </div>
+      </section>
+    </main>
+
+    <footer class="shop-footer arcade-footer">
+      <div class="container">
+        <p>
+          © <span id="current-year"></span> Pixel Palace Arcade - Shop. All
+          rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script src="shop.js"></script>
+  </body>
+</html>

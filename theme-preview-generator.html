@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Theme Preview Generator (Global Style)</title>
+
+    <!-- 1. Include html2canvas library -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <script>
+      const PREVIEW_BOX_ID = "theme-preview-box";
+      let currentPreviewThemeId = "modern"; // Keep track for filename
+
+      // Function to apply a theme stylesheet to the ENTIRE page
+      function applyPageTheme(themeId) {
+        currentPreviewThemeId = themeId; // Update for filename
+        let themeStylesheet = document.getElementById("page-theme-stylesheet");
+        if (!themeStylesheet) {
+          themeStylesheet = document.createElement("link");
+          themeStylesheet.rel = "stylesheet";
+          themeStylesheet.id = "page-theme-stylesheet";
+          document.head.appendChild(themeStylesheet);
+        }
+        // Themes are in /themes/ subfolder relative to this root HTML file
+        themeStylesheet.href = `themes/${themeId}.css`;
+        console.log(`Page theme applied: ${themeId}.css`);
+
+        // Update the class on the preview box itself so it can have a themed border/bg
+        // The content inside will pick up global styles from the loaded theme.css
+        const previewBox = document.getElementById(PREVIEW_BOX_ID);
+        if (previewBox) {
+          // Remove old theme classes like theme-preview-modern, theme-page-modern etc.
+          previewBox.className = "item-preview-display-box"; // Base class for sizing
+          // Add a class that global theme can target if needed, or just let children inherit
+          previewBox.classList.add(`theme-is-${themeId}`); // e.g., theme-is-modern
+        }
+        // No need to inject specific HTML for the preview content if it's just one block
+        // We will put a static representative HTML structure in the preview box directly.
+      }
+
+      async function captureAndDownloadPreview() {
+        const previewElement = document.getElementById(PREVIEW_BOX_ID);
+        if (!previewElement) {
+          alert("Preview element not found!");
+          return;
+        }
+        if (typeof html2canvas === "undefined") {
+          alert("html2canvas library not loaded.");
+          return;
+        }
+
+        const originalBorderStyle = previewElement.style.border; // Save current border
+        previewElement.style.border = "none"; // No border for actual capture
+
+        try {
+          const canvas = await html2canvas(previewElement, {
+            backgroundColor: null, // Use actual computed background of the element
+            scale: 1.5, // Adjust scale for desired resolution
+            useCORS: true,
+            logging: true, // Enable html2canvas logging for debugging
+          });
+
+          previewElement.style.border = originalBorderStyle; // Restore border
+
+          const imageURL = canvas.toDataURL("image/png");
+          const downloadLink = document.createElement("a");
+          downloadLink.href = imageURL;
+          downloadLink.download = `${currentPreviewThemeId}_preview.png`;
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeChild(downloadLink);
+
+          alert(`Preview for "${currentPreviewThemeId}" download initiated!`);
+        } catch (error) {
+          console.error("Error capturing preview:", error);
+          alert("Error capturing preview. Check console.");
+          previewElement.style.border = originalBorderStyle; // Restore border on error
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        // Set the initial theme for the page and thus for the preview content
+        applyPageTheme("modern");
+      });
+    </script>
+
+    <!-- NO shop.css needed here if previews are styled by global themes -->
+
+    <!-- Google Fonts (make sure it includes fonts for all your themes) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500;700&family=Limelight&family=Aldrich&family=Orbitron&display=swap"
+      rel="stylesheet"
+    />
+
+        <style>
+          /* --- Styles for the generator page itself --- */
+          body {
+            font-family: "Roboto", sans-serif;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background-color: #dce4ec; /* Slightly different neutral background for generator */
+            transition: background-color 0.3s ease, color 0.3s ease;
+          }
+          #controls {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1001;
+          }
+          #controls button {
+            padding: 10px 15px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            background-color: #eee;
+            border-radius: 4px;
+            cursor: pointer;
+          }
+          #controls button:hover {
+            background-color: #ddd;
+          }
+
+          .page-title {
+            margin-top: 100px; /* Increased margin-top due to fixed controls */
+            margin-bottom: 10px;
+            /* Color and font will come from theme's h1 style */
+          }
+          p.instructions {
+            max-width: 600px;
+            text-align: center;
+          }
+
+          /* --- Styles for the preview box that will be screenshotted --- */
+          .item-preview-display-box {
+            /* === INCREASED PREVIEW BOX SIZE === */
+            width: 450px; /* Example: Significantly wider */
+            height: 300px; /* Example: Significantly taller */
+            /* Or use aspect ratio: e.g., width: 400px; aspect-ratio: 16 / 9; */
+
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); /* More pronounced shadow */
+            margin-bottom: 30px;
+            border: 1px solid #bbb; /* Base border for the box */
+            position: relative;
+            display: flex;
+            flex-direction: column; /* For internal layout (header, content, footer) */
+            /* Background color of this box will be set by the global theme (body/surface) */
+          }
+
+          /* --- MINIATURE UI ELEMENTS FOR PREVIEW (ADJUST SCALING) --- */
+          /* The goal is to make them look like a small section of the actual UI */
+          /* You'll need to apply classes from your theme files to the HTML below */
+
+          /* Example: Simulating a mini header area inside the preview */
+          .item-preview-display-box .mini-header-area {
+            padding: 8px 12px; /* Adjust padding */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+            /* border-bottom: 1px solid; /* Border color from theme */
+            /* Background color for this mini-header will come from theme's .arcade-header or .shop-main-header */
+          }
+          .item-preview-display-box .mini-header-area .arcade-header-title,
+          .item-preview-display-box .mini-header-area .shop-header-title {
+            font-size: 0.8em !important; /* Larger than before, but still scaled */
+            margin: 0 !important;
+            padding: 0 !important;
+            text-shadow: none !important; /* Often better at small scales */
+          }
+          .item-preview-display-box .mini-header-area .tokens-display {
+            font-size: 0.6em !important;
+            padding: 4px 8px !important;
+            border-width: 1px !important;
+            margin: 0 !important;
+          }
+
+          /* Example: Simulating a mini content/grid area */
+          .item-preview-display-box .mini-content-area {
+            flex-grow: 1; /* Takes up remaining space */
+            padding: 15px; /* More padding */
+            display: flex;
+            gap: 10px; /* Space between mini cards */
+            align-items: flex-start; /* Align cards to top */
+            justify-content: center; /* Center the group of cards */
+            width: 100%;
+            box-sizing: border-box;
+          }
+          .item-preview-display-box .mini-content-area .game-card, /* Use actual game card class */
+        .item-preview-display-box .mini-content-area .shop-item {
+            /* Or shop item class */
+            width: 100px; /* Example width for mini cards */
+            height: auto; /* Let content determine height, or set fixed */
+            min-height: 70px;
+            font-size: 0.55em !important; /* Scale down text inside cards */
+            padding: 8px !important;
+            border-radius: 4px !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+          }
+          .item-preview-display-box .mini-content-area .game-card h3,
+          .item-preview-display-box .mini-content-area .shop-item h3 {
+            /* Target heading inside card */
+            font-size: 1.1em !important; /* Relative to parent's 0.55em */
+            margin: 0 0 4px 0 !important;
+          }
+          .item-preview-display-box .mini-content-area .game-card p,
+          .item-preview-display-box .mini-content-area .shop-item p {
+            /* Target paragraph inside card */
+            font-size: 0.9em !important; /* Relative to parent's 0.55em */
+            line-height: 1.3 !important;
+            margin-bottom: 5px !important;
+          }
+
+          /* Example: Simulating a mini button area */
+          .item-preview-display-box .mini-button-area {
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+          }
+          .item-preview-display-box .mini-button-area .arcade-button,
+          .item-preview-display-box .mini-button-area .pixel-button {
+            font-size: 0.65em !important;
+            padding: 6px 12px !important;
+            border-width: 1px !important; /* If theme buttons have borders */
+          }
+        </style>
+      </head>
+      <body>
+        <h1 class="page-title">Theme Preview Generator</h1>
+        <p class="instructions">
+          Select a theme to apply to this page. The preview box below will
+          reflect the selected theme using its global styles, scaled down. Then
+          click "Capture & Download Preview".
+        </p>
+
+        <div id="controls">
+          <button onclick="applyPageTheme('modern')">Apply Modern Theme</button>
+          <button onclick="applyPageTheme('retro')">Apply Retro Theme</button>
+          <button onclick="applyPageTheme('cyberpunk')">
+            Apply Cyberpunk Theme
+          </button>
+          <hr
+            style="
+              width: 100%;
+              border: 0;
+              border-top: 1px solid #eee;
+              margin: 5px 0;
+            "
+          />
+          <button onclick="captureAndDownloadPreview()">
+            Capture & Download Preview
+          </button>
+        </div>
+
+        <!-- This is the element we will screenshot. -->
+        <!-- Its content uses classes that should be styled by the loaded global theme.css -->
+        <div id="theme-preview-box" class="item-preview-display-box">
+          <!-- More detailed representative HTML structure -->
+          <div class="mini-header-area arcade-header">
+            <!-- Apply actual header class -->
+            <h1 class="arcade-header-title">Arcade</h1>
+            <!-- Title -->
+            <div class="tokens-display">Tokens: <span>100</span></div>
+            <!-- Token display -->
+          </div>
+
+          <div class="mini-content-area">
+            <div class="game-card">
+              <!-- Use your actual game card class -->
+              <h3>Game Title</h3>
+              <p style="font-size: 0.8em !important">A short description...</p>
+              <!-- No image needed for this mini preview, focus on layout -->
+            </div>
+            <div class="game-card">
+              <!-- Another mini card -->
+              <h3>Another Game</h3>
+              <p style="font-size: 0.8em !important">More fun here!</p>
+            </div>
+          </div>
+
+          <div class="mini-button-area">
+            <button class="arcade-button pixel-button">Play Now</button>
+            <!-- Button -->
+          </div>
+        </div>
+      </body>
+    </html>
+  </head>
+</html>

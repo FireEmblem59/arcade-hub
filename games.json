@@ -5,7 +5,9 @@
     "folderName": "Memory Game",
     "description": "Test your recall by matching pairs of cards!",
     "thumbnail": "games/Memory Game/thumbnail.png",
-    "entryPoint": "index.html"
+    "entryPoint": "index.html",
+    "price": 0,
+    "ownedByDefault": true
   },
   {
     "id": "reaction-timer",
@@ -13,7 +15,19 @@
     "folderName": "Reaction Timer",
     "description": "How fast can you react? Click when the color changes.",
     "thumbnail": "games/Reaction Timer/thumbnail.png",
-    "entryPoint": "index.html"
+    "entryPoint": "index.html",
+    "price": 250,
+    "ownedByDefault": false
+  },
+  {
+    "id": "click-target",
+    "name": "Click Target",
+    "folderName": "Click Target",
+    "description": "Click the moving targets as fast as you can!",
+    "thumbnail": "games/Click Target/thumbnail.png",
+    "entryPoint": "index.html",
+    "price": 250,
+    "ownedByDefault": false
   },
   {
     "id": "typing-speed-test",
@@ -21,7 +35,9 @@
     "folderName": "Typing Speed Test",
     "description": "How fast can you type? Test your keyboard skills!",
     "thumbnail": "games/Typing Speed Test/thumbnail.png",
-    "entryPoint": "index.html"
+    "entryPoint": "index.html",
+    "price": 250,
+    "ownedByDefault": false
   },
   {
     "id": "stop-the-bar",
@@ -29,7 +45,9 @@
     "folderName": "Stop the Bar",
     "description": "Stop the moving bar in the target zone. Precision pays!",
     "thumbnail": "games/Stop the Bar/thumbnail.png",
-    "entryPoint": "index.html"
+    "entryPoint": "index.html",
+    "price": 250,
+    "ownedByDefault": false
   },
   {
     "id": "quick-math",
@@ -37,7 +55,9 @@
     "folderName": "Quick Math",
     "description": "Solve arithmetic problems against the clock!",
     "thumbnail": "games/Quick Math/thumbnail.png",
-    "entryPoint": "index.html"
+    "entryPoint": "index.html",
+    "price": 250,
+    "ownedByDefault": false
   },
   {
     "id": "lucky-card",
@@ -45,7 +65,9 @@
     "folderName": "Lucky Card",
     "description": "Pick a card, any card! Will fortune favor you?",
     "thumbnail": "games/Lucky Card/thumbnail.png",
-    "entryPoint": "index.html"
+    "entryPoint": "index.html",
+    "price": 250,
+    "ownedByDefault": false
   },
   {
     "id": "placeholder-game",
@@ -53,6 +75,8 @@
     "folderName": "Placeholder Game",
     "description": "A new exciting game is on its way. Stay tuned!",
     "thumbnail": "img/coming-soon-thumb.png",
-    "entryPoint": "index.html"
+    "entryPoint": "index.html",
+    "price": 0,
+    "ownedByDefault": true
   }
 ]

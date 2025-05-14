@@ -32,7 +32,6 @@ function updateTokenDisplayInGame(tokens) {
 }
 
 function getCurrentTokens() {
-  // Helper if not already in this game's script
   return parseInt(localStorage.getItem(ARCADE_TOKENS_KEY)) || 0;
 }
 
@@ -196,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
     tokensEarnedDisplay.textContent = tokensEarned;
     if (tokensEarned > 0) {
       saveTokensToLocalStorage(tokensEarned);
+      updateTokenDisplayInGame(getCurrentTokens());
     }
     gameOverMessage.classList.remove("hidden");
     startButton.textContent = "Start Game";

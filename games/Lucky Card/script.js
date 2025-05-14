@@ -2,14 +2,18 @@
 
 const ARCADE_TOKENS_KEY = "arcadeTokens";
 
-function saveTokensToLocalStorage(amount) {
-  if (amount === 0 && prizeValue === 0) {
-    /* Special case for losing exact cost */
-  } else if (amount === 0) return;
+function saveTokensToLocalStorage(netChangeAmount) {
+  // Only update if there's an actual change in tokens
+  if (netChangeAmount === 0) return;
 
   let currentTokens = parseInt(localStorage.getItem(ARCADE_TOKENS_KEY)) || 0;
-  localStorage.setItem(ARCADE_TOKENS_KEY, currentTokens + amount);
-  updateTokenDisplayInGame(currentTokens + amount); // Update display immediately
+  localStorage.setItem(ARCADE_TOKENS_KEY, currentTokens + netChangeAmount);
+  console.log(
+    `LuckyCard: Tokens changed by ${netChangeAmount}. New total in localStorage: ${
+      currentTokens + netChangeAmount
+    }`
+  );
+  updateTokenDisplayInGame(currentTokens + netChangeAmount);
 }
 
 function getCurrentTokens() {
@@ -17,30 +21,33 @@ function getCurrentTokens() {
 }
 
 function createTokenDisplay() {
+  let displayContainer = document.getElementById(
+    "in-game-token-display-container"
+  );
   let display = document.getElementById("in-game-token-display");
-  if (!display) {
+  if (!display && displayContainer) {
     display = document.createElement("div");
     display.id = "in-game-token-display";
-    display.style.position = "fixed";
-    display.style.top = "10px";
-    display.style.right = "10px";
-    display.style.padding = "8px 12px";
-    display.style.backgroundColor = "rgba(0,0,0,0.7)";
-    display.style.color = "#FFD700"; // Gold color
-    display.style.borderRadius = "5px";
-    display.style.fontFamily = "'Press Start 2P', cursive";
-    display.style.fontSize = "0.9em";
-    display.style.zIndex = "1000";
+    displayContainer.appendChild(display); // Append to dedicated container
+  } else if (!display && !displayContainer) {
+    // Fallback
+    display = document.createElement("div");
+    display.id = "in-game-token-display";
     document.body.appendChild(display);
+    console.warn(
+      "Token display container missing in Lucky Card HTML, appended to body."
+    );
   }
   return display;
 }
 
 function updateTokenDisplayInGame(tokens) {
-  const display = createTokenDisplay();
-  display.textContent = `Tokens: ${tokens}`;
+  const display = createTokenDisplay(); // Ensures it exists
+  if (display) {
+    // Check if display element was successfully created/found
+    display.textContent = `Tokens: ${tokens}`;
+  }
 }
-// --- END NEW TOKEN DISPLAY FUNCTIONS ---
 
 document.addEventListener("DOMContentLoaded", () => {
   const cardArea = document.getElementById("card-area");
@@ -51,17 +58,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const costToPlayText = document.getElementById("cost-to-play-text");
   const playCostSpan = document.getElementById("play-cost");
   const playAgainCostSpan = document.getElementById("play-again-cost");
+  const outcomesListElement = document.getElementById("outcomes-list");
 
-  // Game Settings
   const numberOfCards = 3;
   const costToPlay = 5;
   const prizeOptions = [
-    { value: 0, weight: 55, text: "Try Again!" },
-    { value: 2, weight: 20, text: "Small Win!" },
-    { value: 5, weight: 10, text: "Nice!" },
-    { value: 10, weight: 8, text: "Good Job!" },
-    { value: 25, weight: 5, text: "Big Win!" },
-    { value: 50, weight: 2, text: "JACKPOT!" },
+    // value is the prize BEFORE deducting cost
+    { value: 0, weight: 50, text: "Unlucky!", jackpot: false }, // Increased weight for 0
+    { value: 2, weight: 25, text: "Small Prize!", jackpot: false },
+    { value: 5, weight: 10, text: "Even Steven!", jackpot: false }, // Breaks even
+    { value: 10, weight: 8, text: "Nice Win!", jackpot: false },
+    { value: 25, weight: 5, text: "Big Winner!", jackpot: false },
+    { value: 50, weight: 2, text: "JACKPOT!", jackpot: true },
   ];
 
   let gameActive = true;
@@ -69,14 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function setupGame() {
     updateTokenDisplayInGame(getCurrentTokens());
-    createOutcomesList();
+    populateOutcomesList();
 
     gameActive = true;
     pickedCardElement = null;
     cardArea.innerHTML = "";
     resultDisplayContainer.classList.add("hidden");
     instructionText.textContent = "Pick a card to reveal your prize!";
-    playAgainButton.classList.add("hidden");
+    playAgainButton.classList.add("hidden"); // Hide initially, show after a round
 
     if (costToPlay > 0) {
       costToPlayText.classList.remove("hidden");
@@ -100,14 +108,15 @@ document.addEventListener("DOMContentLoaded", () => {
         weightedPrizes[Math.floor(Math.random() * weightedPrizes.length)]
       );
     }
-    shuffleArray(cardPrizes);
+    shuffleArray(cardPrizes); // Shuffle the chosen set of prizes for the cards
 
     for (let i = 0; i < numberOfCards; i++) {
+      const cardData = cardPrizes[i]; // Current prize for this card
       const card = document.createElement("div");
       card.classList.add("card");
-      card.dataset.prizeValue = cardPrizes[i].value;
-      card.dataset.prizeText = cardPrizes[i].text;
-      if (cardPrizes[i].jackpot) {
+      card.dataset.prizeValue = cardData.value;
+      card.dataset.prizeText = cardData.text;
+      if (cardData.jackpot) {
         card.dataset.jackpot = "true";
       }
 
@@ -116,22 +125,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const cardFront = document.createElement("div");
       cardFront.classList.add("card-face", "card-front");
+      if (cardData.jackpot) cardFront.classList.add("jackpot-card-face"); // For special jackpot styling
 
       const prizeAmountSpan = document.createElement("span");
       prizeAmountSpan.classList.add("prize-amount");
-      prizeAmountSpan.textContent = cardPrizes[i].value;
+      prizeAmountSpan.textContent = cardData.value;
 
       const prizeTextSpan = document.createElement("span");
       prizeTextSpan.classList.add("prize-text");
-      prizeTextSpan.textContent = cardPrizes[i].text;
-
-      if (cardPrizes[i].jackpot) {
-        cardFront.classList.add("jackpot");
-      }
+      prizeTextSpan.textContent = cardData.text;
 
       cardFront.appendChild(prizeAmountSpan);
       cardFront.appendChild(prizeTextSpan);
-
       card.appendChild(cardBack);
       card.appendChild(cardFront);
 
@@ -164,37 +169,30 @@ document.addEventListener("DOMContentLoaded", () => {
     pickedCardElement = event.currentTarget;
     const prizeValue = parseInt(pickedCardElement.dataset.prizeValue);
     const prizeText = pickedCardElement.dataset.prizeText;
+    const isJackpot = pickedCardElement.dataset.jackpot === "true";
 
-    let netChange = prizeValue;
-    if (costToPlay > 0) {
-      netChange = prizeValue - costToPlay;
-    }
+    let netChange = prizeValue - costToPlay;
     saveTokensToLocalStorage(netChange);
 
     revealAllCards();
 
-    // Show result message (based on the picked card)
-    if (prizeValue > 0 && costToPlay > 0) {
-      resultDisplayText.textContent = `You won ${prizeValue} tokens! (Net: ${
-        netChange > 0 ? "+" : ""
-      }${netChange})`;
-    } else if (prizeValue > 0 && costToPlay === 0) {
-      resultDisplayText.textContent = `You won ${prizeValue} tokens!`;
+    let resultMsg = "";
+    if (isJackpot) {
+      resultMsg = `🎉 JACKPOT! 🎉<br>You won ${prizeValue} tokens!`;
+    } else if (prizeValue > 0) {
+      resultMsg = `You won ${prizeValue} tokens! (${prizeText})`;
     } else {
-      resultDisplayText.textContent = `Sorry! ${prizeText}. (Net: ${netChange})`;
+      resultMsg = `Sorry! ${prizeText}`;
     }
+    resultMsg += `<br>(Net: ${netChange >= 0 ? "+" : ""}${netChange} Tokens)`;
 
-    if (pickedCardElement.dataset.jackpot === "true") {
-      resultDisplayText.innerHTML = `🎉 JACKPOT! 🎉<br>You won ${prizeValue} tokens! (Net: ${
-        netChange > 0 ? "+" : ""
-      }${netChange})`;
-    }
+    resultDisplayText.innerHTML = resultMsg;
     resultDisplayContainer.classList.remove("hidden");
-    instructionText.textContent = "Round Over!";
+    instructionText.textContent = "Round Over! Play again?";
 
     playAgainButton.classList.remove("hidden");
     playAgainButton.disabled =
-      getCurrentTokens() < costToPlay && costToPlay > 0;
+      costToPlay > 0 && getCurrentTokens() < costToPlay;
   }
 
   function revealAllCards() {
@@ -203,46 +201,50 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         card.classList.add("flipped");
         card.removeEventListener("click", handleCardPick);
-        if (card !== pickedCardElement) {
-          card.classList.add("disabled");
+        if (card === pickedCardElement) {
+          card.classList.add("picked-card-highlight"); // Highlight picked card
         } else {
-          card.style.boxShadow = "0 0 15px 5px #FFD700";
+          card.classList.add("disabled");
         }
-        if (
-          card.dataset.jackpot === "true" &&
-          card.querySelector(".card-front.jackpot")
-        ) {
-          card.style.borderColor = "#FF4500";
+        // Highlight all jackpot cards, picked or not
+        if (card.dataset.jackpot === "true") {
+          card.classList.add("jackpot-card-revealed");
         }
-      }, index * 150); // Stagger the reveal
+      }, index * 150 + 200); // Stagger reveal slightly after main flip
     });
   }
 
-  function createOutcomesList() {
-    const outcomesList = document.getElementById("outcomes-list");
-    outcomesList.innerHTML = "";
+  function populateOutcomesList() {
+    if (!outcomesListElement) return;
+    outcomesListElement.innerHTML = "";
 
-    // Get unique prizes (in case of duplicate values)
-    const uniquePrizes = prizeOptions.reduce((acc, curr) => {
-      if (!acc.find((item) => item.value === curr.value)) {
-        acc.push(curr);
+    const uniqueNetPrizes = [];
+    prizeOptions.forEach((option) => {
+      const net = option.value - costToPlay;
+      if (!uniqueNetPrizes.find((item) => item.netValue === net)) {
+        uniqueNetPrizes.push({
+          netValue: net,
+          text: option.text, // Or generate text based on net value
+          isJackpot: option.jackpot,
+        });
       }
-      return acc;
-    }, []);
+    });
 
-    // Sort from highest to lowest
-    uniquePrizes.sort((a, b) => b.value - a.value);
+    uniqueNetPrizes.sort((a, b) => b.netValue - a.netValue); // Sort highest net first
 
-    uniquePrizes.forEach((option) => {
+    uniqueNetPrizes.forEach((option) => {
       const outcomeItem = document.createElement("div");
-      outcomeItem.className = `outcome-item ${
-        option.value > 0 ? "win" : "lose"
-      }`;
-      outcomeItem.innerHTML = `
-      <span>${option.text}</span>
-      <span>${option.value > 0 ? "+" : ""}${option.value}</span>
-    `;
-      outcomesList.appendChild(outcomeItem);
+      outcomeItem.classList.add("outcome-item");
+      if (option.isJackpot) outcomeItem.classList.add("jackpot");
+      else if (option.netValue > 0) outcomeItem.classList.add("win");
+      else if (option.netValue < 0) outcomeItem.classList.add("lose");
+      else outcomeItem.classList.add("even");
+
+      let text = option.isJackpot ? "JACKPOT!" : option.text;
+      outcomeItem.innerHTML = `<span>${text}</span> <span>(${
+        option.netValue >= 0 ? "+" : ""
+      }${option.netValue + 5})</span>`;
+      outcomesListElement.appendChild(outcomeItem);
     });
   }
 

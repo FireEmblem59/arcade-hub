@@ -1,67 +1,207 @@
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: var(--font-primary, "Roboto", sans-serif);
   display: flex;
   justify-content: center;
-  align-items: center; /* Vertically center for this game */
+  align-items: center;
   min-height: 100vh;
-  background-color: #1a1a1a; /* Dark casino background */
-  color: #f0f0f0;
+  background-color: var(--color-bg, #1a1a1a);
+  color: var(--color-text, #f0f0f0);
   margin: 0;
   padding: 20px;
   box-sizing: border-box;
-  overflow-y: auto; /* Allow scroll if content overflows on small screens */
+  overflow-y: auto;
+}
+
+/* In-Game Token Display */
+#in-game-token-display {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  padding: 10px 15px;
+  background-color: var(--color-surface-dark-alpha, rgba(12, 19, 36, 0.85));
+  color: var(--color-tokens, #ffd700);
+  border-radius: var(--border-radius-md, 5px);
+  font-family: var(--font-accent-pixel, "Press Start 2P", cursive);
+  font-size: 0.9em;
+  z-index: 1000;
+  border: 1px solid var(--color-primary-accent, #c0a062); /* Use game's gold as accent */
+  box-shadow: var(--box-shadow-md, 0 3px 8px rgba(0, 0, 0, 0.4));
 }
 
 .game-container {
-  background: linear-gradient(135deg, #333333 0%, #1a1a1a 100%);
-  border: 5px solid #c0a062; /* Gold border */
-  padding: 30px 40px;
+  background: var(
+    --casino-grad,
+    linear-gradient(135deg, #333333 0%, #1a1a1a 100%)
+  );
+  border: 5px solid var(--color-secondary-accent, #c0a062); /* Gold border */
+  padding: 25px 35px; /* Slightly adjusted padding */
   border-radius: 15px;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 10px rgba(0, 0, 0, 0.5); /* Gold glow and inner shadow */
+  box-shadow: 0 0 25px
+      var(--color-secondary-accent-alpha, rgba(255, 215, 0, 0.25)),
+    inset 0 0 10px rgba(0, 0, 0, 0.5);
   text-align: center;
   width: 100%;
-  max-width: 550px;
+  max-width: 500px; /* Slightly narrower for a focused game feel */
+  position: relative; /* For positioning info icon */
+}
+
+.game-header {
+  margin-bottom: 20px; /* Less margin */
 }
 
 .game-header h1 {
-  font-family: "Limelight", cursive; /* Casino-style font */
-  color: #ffd700; /* Gold color */
-  text-shadow: 2px 2px #000000, 0 0 10px #ffd700;
+  font-family: var(--font-casino, "Limelight", cursive);
+  color: var(--color-secondary-accent, #ffd700);
+  text-shadow: 2px 2px 2px var(--color-bg, #000),
+    0 0 10px var(--color-secondary-accent, #ffd700);
   margin-bottom: 10px;
-  font-size: 2.8em;
+  font-size: 2.5em; /* Slightly smaller */
 }
 
 .instructions,
 .cost-to-play {
-  font-family: "Roboto", sans-serif;
-  font-size: 1.1em;
-  color: #cccccc;
-  margin-bottom: 25px;
+  font-family: var(--font-primary, "Roboto", sans-serif);
+  font-size: 1em; /* Slightly smaller */
+  color: var(--color-text-muted, #cccccc);
+  margin-bottom: 15px; /* Less margin */
 }
 .cost-to-play {
   font-weight: bold;
-  color: #ffd700;
+  color: var(--color-tokens, #ffd700);
+}
+
+.info-icon-wrapper {
+  position: absolute;
+  top: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  z-index: 1000;
+}
+.info-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-surface-secondary-alpha, rgba(192, 160, 98, 0.3));
+  color: var(--color-secondary-accent, #ffd700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: help;
+  font-family: var(--font-accent-pixel, "Press Start 2P", cursive);
+  font-size: 0.9em;
+  border: 1px solid var(--color-secondary-accent, #ffd700);
+  transition: all 0.3s ease;
+}
+.info-icon:hover {
+  background: var(
+    --color-secondary-accent-alpha-hover,
+    rgba(192, 160, 98, 0.5)
+  );
+  transform: scale(1.1);
+}
+.info-icon:hover .outcomes-tooltip {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.outcomes-tooltip {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  top: 100%; /* Position below the icon */
+  right: 0;
+  margin-top: 8px; /* Space from icon */
+  width: 200px; /* Wider for clarity */
+  background: var(--color-surface-dark-alpha-strong, rgba(10, 10, 10, 0.95));
+  border: 2px solid var(--color-secondary-accent, #ffd700);
+  border-radius: var(--border-radius-md, 8px);
+  padding: 15px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 100;
+  text-align: left;
+  box-shadow: var(--box-shadow-lg, 0 5px 15px rgba(0, 0, 0, 0.4));
+  transform: translateY(-10px); /* Initial position for transition */
+}
+.outcomes-tooltip h4 {
+  margin: 0 0 10px 0;
+  color: var(--color-secondary-accent, #ffd700);
+  font-family: var(--font-accent-pixel, "Press Start 2P", cursive);
+  font-size: 0.85em;
+  border-bottom: 1px solid
+    var(--color-secondary-accent-alpha, rgba(192, 160, 98, 0.5));
+  padding-bottom: 5px;
+}
+.outcome-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  font-size: 0.85em;
+  font-family: var(--font-primary);
+  border-bottom: 1px dashed
+    var(--color-border-light-alpha, rgba(74, 85, 104, 0.3));
+}
+.outcome-item:last-child {
+  border-bottom: none;
+}
+.outcome-item span:first-child {
+  color: var(--color-text, #f0f0f0);
+}
+.outcome-item span:last-child {
+  font-weight: bold;
+}
+
+.outcome-item.win span:last-child {
+  color: var(--color-success, #2ecc71);
+}
+.outcome-item.lose span:last-child {
+  color: var(--color-danger, #e74c3c);
+}
+.outcome-item.even span:last-child {
+  color: var(--color-text-muted, #cccccc);
+}
+.outcome-item.jackpot {
+  font-weight: bold;
+}
+.outcome-item.jackpot span:first-child {
+  color: var(--color-secondary-accent, #ffd700);
+}
+.outcome-item.jackpot span:last-child {
+  color: var(--color-secondary-accent, #ffd700);
+  animation: jackpotPulseText 1s infinite alternate;
+}
+
+@keyframes jackpotPulseText {
+  from {
+    text-shadow: 0 0 3px var(--color-secondary-accent);
+  }
+  to {
+    text-shadow: 0 0 8px var(--color-secondary-accent), 0 0 12px #fff;
+  }
 }
 
 .card-area {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px; /* Spacing between cards */
+  gap: 20px; /* More space */
   margin-bottom: 30px;
-  flex-wrap: wrap; /* Allow cards to wrap on smaller screens */
+  flex-wrap: wrap;
   perspective: 1000px;
 }
 
 .card {
-  width: 100px;
-  height: 150px;
-  border-radius: 10px;
+  width: 110px; /* Slightly larger cards */
+  height: 165px;
+  border-radius: 12px; /* More rounded */
   cursor: pointer;
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Fancy flip */
-  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.4);
+  transition: transform 0.7s cubic-bezier(0.25, 0.1, 0.25, 1), box-shadow 0.3s;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+}
+.card:hover:not(.flipped):not(.disabled) {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
 }
 
 .card-face {
@@ -69,50 +209,57 @@ body {
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  border-radius: 10px;
+  border-radius: 10px; /* Match card's inner rounding */
   display: flex;
-  flex-direction: column; /* To stack text and icon */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: "Press Start 2P", cursive; /* Retro font for card content */
+  font-family: var(--font-accent-pixel, "Press Start 2P", cursive);
 }
 
 .card-back {
-  background: linear-gradient(
-    135deg,
-    #8b0000,
-    #b22222
-  ); /* Dark red card back */
-  border: 3px outset #ff4500;
-  color: #ffd700; /* Gold symbol on back */
-  font-size: 3em; /* Large question mark or symbol */
+  background: var(
+    --card-back-grad,
+    linear-gradient(135deg, #6b0000, #a01111)
+  ); /* Deeper red */
+  border: 3px outset var(--card-back-border, #d46a6a);
+  color: var(--card-back-symbol-color, #ffd700);
+  font-size: 3.5em;
 }
 .card-back::before {
-  /* Example content for card back */
-  content: "?";
+  content: "★"; /* Star symbol or ? */
 }
 
 .card-front {
-  background: linear-gradient(135deg, #f0e6d2, #fff8dc); /* Creamy/gold front */
-  border: 3px outset #c0a062;
-  color: #333;
+  background: var(
+    --card-front-grad,
+    linear-gradient(135deg, #fff8e1, #fff0c7)
+  ); /* Lighter cream */
+  border: 3px outset var(--card-front-border, #e0c69e);
+  color: #4a3b28; /* Darker brown text */
   transform: rotateY(180deg);
   padding: 10px;
   box-sizing: border-box;
 }
 .card-front .prize-amount {
-  font-size: 1.8em;
-  color: #a0522d; /* Brown/Sienna for prize amount */
-  margin-bottom: 5px;
+  font-size: 2em; /* Larger prize amount */
+  color: var(--prize-amount-color, #8b4513); /* SaddleBrown */
+  margin-bottom: 8px;
 }
 .card-front .prize-text {
-  font-size: 0.7em;
-  color: #555;
+  font-size: 0.75em;
+  color: var(--prize-text-color, #654321); /* Darker Sienna */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-.card-front.jackpot .prize-amount {
-  /* Special style for jackpot */
-  color: #ff4500;
-  text-shadow: 0 0 8px #ffd700;
+.card-front.jackpot-card-face .prize-amount {
+  color: var(--jackpot-color, #ff4500);
+  text-shadow: 0 0 10px var(--color-secondary-accent, #ffd700), 0 0 5px #fff;
+  animation: jackpotPulseText 1s infinite alternate; /* Already defined */
+}
+.card-front.jackpot-card-face .prize-text {
+  color: var(--jackpot-color, #ff4500);
+  font-weight: bold;
 }
 
 .card.flipped {
@@ -120,52 +267,44 @@ body {
   cursor: default;
 }
 .card.disabled {
-  /* Style for unpicked cards after a pick */
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: default;
-  transform: scale(0.95); /* Optionally shrink them slightly */
+  transform: scale(0.95);
+}
+.card.picked-card-highlight {
+  box-shadow: 0 0 20px 8px var(--color-secondary-accent, #ffd700),
+    0 0 8px 4px #fff;
+  border: 3px solid #fffacd !important; /* Ensure this overrides */
+  transform: rotateY(180deg) scale(1.08) !important; /* Make it pop more */
+  z-index: 10;
+}
+.card.jackpot-card-revealed {
+  /* Styles for any revealed jackpot card (picked or not) */
+  border: 3px solid var(--jackpot-color, #ff4500) !important;
+  /* Animation on its front face is already handled by .jackpot-card-face */
 }
 
 .result-display {
   margin-bottom: 25px;
-  min-height: 2em;
+  min-height: 2.5em; /* More space for result text */
 }
 .result-display p {
-  font-family: "Limelight", cursive;
-  font-size: 1.6em;
-  color: #ffd700;
-  text-shadow: 1px 1px #000;
+  font-family: var(--font-casino, "Limelight", cursive);
+  font-size: 1.5em; /* Slightly smaller, can have more text */
+  color: var(--color-secondary-accent, #ffd700);
+  text-shadow: 1px 1px 1px #000;
+  line-height: 1.4;
 }
 
-.game-controls button,
-.game-controls a.hub-button {
-  font-family: "Press Start 2P", cursive;
-  background-color: #c0a062; /* Gold button */
-  color: #1a1a1a; /* Dark text */
-  border: 2px outset #a08042;
-  padding: 12px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 0.9em;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  text-decoration: none;
-  margin: 5px;
-  display: inline-block;
+.game-controls {
+  /* Using global .arcade-button and .pixel-button styles from theme */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
 }
-.game-controls button:hover,
-.game-controls a.hub-button:hover {
-  background-color: #ae9052;
-  transform: translateY(-1px);
-}
-.game-controls button:active {
-  transform: translateY(1px);
-}
-.game-controls button:disabled {
-  background-color: #777;
-  border-color: #555;
-  color: #aaa;
-  cursor: not-allowed;
-}
+
+/* .game-controls button, .game-controls a.hub-button already styled by global theme */
 
 .hidden {
   display: none !important;
@@ -174,121 +313,41 @@ body {
 /* Responsive */
 @media (max-width: 500px) {
   .game-header h1 {
-    font-size: 2.2em;
+    font-size: 2em;
+  }
+  .card {
+    width: 90px;
+    height: 135px;
+  }
+  .card-back {
+    font-size: 3em;
+  }
+  .card-front .prize-amount {
+    font-size: 1.6em;
+  }
+  .result-display p {
+    font-size: 1.2em;
+  }
+  .info-icon-wrapper {
+    top: 15px;
+    right: 15px;
+  }
+  .outcomes-tooltip {
+    width: 160px;
+  }
+}
+@media (max-width: 400px) {
+  /* Changed from 380 for slightly more room */
+  .card-area {
+    gap: 10px;
   }
   .card {
     width: 80px;
     height: 120px;
   }
-  .card-back {
-    font-size: 2.5em;
+  .game-controls button,
+  .game-controls a.hub-button {
+    font-size: 0.8em;
+    padding: 10px 15px;
   }
-  .card-front .prize-amount {
-    font-size: 1.5em;
-  }
-  .card-front .prize-text {
-    font-size: 0.6em;
-  }
-  .result-display p {
-    font-size: 1.3em;
-  }
-}
-@media (max-width: 380px) {
-  .card-area {
-    gap: 10px;
-  }
-  .card {
-    width: 70px;
-    height: 105px;
-  }
-}
-
-.card.picked-card {
-  box-shadow: 0 0 15px 5px #ffd700, 0 0 5px 2px #fff;
-  border-color: #fffacd !important;
-  transform: rotateY(180deg) scale(1.05);
-  z-index: 10;
-}
-
-.card-front.jackpot-revealed {
-  animation: jackpotPulse 1s infinite alternate;
-}
-
-@keyframes jackpotPulse {
-  from {
-    box-shadow: 0 0 8px #ffd700, inset 0 0 5px #ff8c00;
-  }
-  to {
-    box-shadow: 0 0 15px #ff8c00, inset 0 0 10px #ffa500;
-  }
-}
-
-.info-icon {
-  position: absolute;
-  top: 15px;
-  right: 16%;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(255, 215, 0, 0.3);
-  color: #ffd700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: help;
-  font-family: "Press Start 2P", cursive;
-  font-size: 0.8em;
-  transition: all 0.3s ease;
-}
-
-.info-icon:hover .outcomes-tooltip {
-  visibility: visible;
-  opacity: 1;
-}
-
-.outcomes-tooltip {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  top: 30px;
-  right: 0;
-  width: 180px;
-  background: rgba(0, 0, 0, 0.9);
-  border: 2px solid #ffd700;
-  border-radius: 8px;
-  padding: 12px;
-  transition: opacity 0.2s ease;
-  z-index: 1000;
-  text-align: left;
-}
-
-.outcomes-tooltip h4 {
-  margin: 0 0 8px 0;
-  color: #ffd700;
-  font-size: 0.8em;
-}
-
-.outcome-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 0;
-  font-size: 0.8em;
-}
-
-.outcome-item.win {
-  color: #2ecc71;
-}
-
-.outcome-item.lose {
-  color: #e74c3c;
-}
-
-.outcome-item.win::before {
-  content: "🎰";
-  margin-right: 8px;
-}
-
-.outcome-item.lose::before {
-  content: "💀";
-  margin-right: 8px;
 }

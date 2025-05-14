@@ -29,6 +29,27 @@
         ></textarea>
       </div>
 
+      <p id="warning-text" style="color: red; font-weight: bold; display: none">
+        Cheater!
+      </p>
+
+      <script>
+        const warningText = document.getElementById("warning-text");
+        const textarea = document.getElementById("typing-input");
+
+        // Prevent pasting
+        textarea.addEventListener("paste", (e) => {
+          e.preventDefault();
+          warningText.style.display = "block";
+        });
+
+        // Prevent drag-and-drop text input (We never know)
+        textarea.addEventListener("drop", (e) => {
+          e.preventDefault();
+          warningText.style.display = "block";
+        });
+      </script>
+
       <div class="game-stats">
         <p>Time: <span id="timer-display">0</span>s</p>
         <p>WPM: <span id="wpm-display">0</span></p>
